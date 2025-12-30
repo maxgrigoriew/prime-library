@@ -1,1 +1,32 @@
-# Используем официальный образ Node.js для сборки приложения\nFROM node:20-alpine AS builder\n\n# Установка рабочей директории\nWORKDIR /app\n\n# Копируем package.json и package-lock.json (если есть)\nCOPY package*.json ./\n\n# Устанавливаем зависимости\nRUN npm ci\n\n# Копируем исходный код\nCOPY . .\n\n# Собираем приложение для продакшена\nRUN npm run build\n\n# Используем легковесный образ для запуска приложения\nFROM nginx:alpine AS production\n\n# Копируем собранные файлы из stage сборки\nCOPY --from=builder /app/dist /usr/share/nginx/html\n\n# Копируем конфигурацию nginx\nCOPY nginx.conf /etc/nginx/nginx.conf\n\n# Открываем порт 80\nEXPOSE 80\n\n# Запускаем nginx\nCMD ['nginx', '-g', 'daemon off;']
+# Use official Node.js alpine image for the build stage
+FROM node:20-alpine AS builder
+
+# Set working directory
+WORKDIR /app
+
+# Copy package.json and package-lock.json (if available)
+COPY package*.json ./
+
+# Install dependencies
+RUN npm ci
+
+# Copy source files
+COPY . .
+
+# Build the application
+RUN npm run build
+
+# Use nginx alpine image for production stage
+FROM nginx:alpine AS production
+
+# Copy built assets from builder stage
+COPY --from=builder /app/dist /usr/share/nginx/html
+
+# Copy nginx configuration
+COPY nginx.conf /etc/nginx/nginx.conf
+
+# Expose port 80
+EXPOSE 80
+
+# Start nginx
+CMD ["nginx", "-g", "daemon off;"]
