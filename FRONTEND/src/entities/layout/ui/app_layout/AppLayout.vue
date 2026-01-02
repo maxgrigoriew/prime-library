@@ -2,7 +2,7 @@
 
 import {computed} from "vue";
 import MainLayout from "../app_layout/main_layout/MainLayout.vue";
-import {AppLayoutType} from "..//types.ts";
+import {AppLayout} from "../types.ts";
 
 defineOptions({
   name: 'AppLayout',
@@ -11,12 +11,14 @@ defineOptions({
   }
 })
 
-const currentLayout = computed(() => AppLayoutType.MainLayout)
+const currentLayout = computed(() => AppLayout.Main + 'Layout')
 
 </script>
 
 <template>
-  <component :is="currentLayout" />
+  <component :is="currentLayout">
+    <router-view />
+  </component>
 </template>
 
 <style scoped>

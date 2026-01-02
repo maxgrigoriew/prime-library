@@ -1,3 +1,3 @@
-export enum AppLayoutType {
-    MainLayout = 'MainLayout'
+export enum AppLayout {
+    Main = 'Main'
 }

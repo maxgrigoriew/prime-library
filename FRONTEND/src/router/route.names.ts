@@ -1,3 +1,4 @@
-export const ROUTE_NAMES: Record<string, string> = {
-    'sdf': 'sdfff'
+export const ROUTE_NAMES = {
+    'MAIN_PAGE': 'MAIN_PAGE',
+    'TASK_PAGE': 'TASK_PAGE',
 }
