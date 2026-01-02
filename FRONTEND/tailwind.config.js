@@ -1,3 +1,5 @@
+import {colors} from './src/assets/tailwind'
+
 /** @type {import('tailwindcss').Config} */
 export default {
   content: [
@@ -6,7 +8,8 @@ export default {
   ],
   theme: {
     extend: {},
+    colors
   },
   plugins: [],
-  prefix: 'd-',
+  prefix: '',
 }
