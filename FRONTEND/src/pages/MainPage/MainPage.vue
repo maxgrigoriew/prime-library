@@ -1,21 +1,26 @@
 <script setup>
 
 import {onMounted, ref} from "vue";
-import {sessionCheck} from "@/entities/auth/api/methods/sessionCheck.js";
-
-const userData = ref(null)
+import {authFt} from "@/entities/auth/features/authFf.js";
+const { getUser, user } = authFt()
 onMounted(async () => {
-  userData.value = await sessionCheck()
+  getUser()
 })
+
 </script>
 <template>
-  {{userData}}
   <div class="grid-layout p-4 gap-12 bg-gray-100">
-    <div class="greeting bg-blue-1 text-white p-4">greeting</div>
-    <div class="profile bg-gray-2 p-4">profile</div>
-    <div class="funnel bg-white p-4">funnel</div>
-    <div class="notes bg-white p-4">notes</div>
-    <div class="calendar bg-gray-3 p-4">calendar</div>
+    <div class="greeting flex flex-col justify-between bg-blue-2 text-white p-[50px] rounded-[12px]">
+      <div class="text-2xl font-bold">Привет, {{user.firstName}}</div>
+      <div>{{new Date().toLocaleDateString()}}</div>
+    </div>
+    <div class="profile bg-blue-3 rounded-[12px] p-[12px]">
+
+
+    </div>
+    <div class="funnel bg-white rounded-[12px] p-[12px]">funnel</div>
+    <div class="notes bg-white rounded-[12px] p-[12px]">notes</div>
+    <div class="calendar bg-gray-3 rounded-[12px] p-[12px]">calendar</div>
   </div>
 </template>
 
