@@ -1,12 +1,12 @@
 import {ROUTE_NAMES} from "../../router/route.names.ts";
+import DealPage from "../DealPage/DealPage.vue";
 import type {RouteForAdd} from '../../router/types'
 import {AppLayout} from "../../entities/layout/ui/types.ts";
-import TaskPage from "./TaskPage.vue";
 
-export const taskPage: RouteForAdd = {
-    path: '/tasks',
-    name: ROUTE_NAMES.TASK_PAGE,
-    component: TaskPage,
+export const dealPage: RouteForAdd = {
+    path: '/deals',
+    name: ROUTE_NAMES.DEAL_PAGE,
+    component: DealPage,
     meta: {
         layout: AppLayout.Main
     },
