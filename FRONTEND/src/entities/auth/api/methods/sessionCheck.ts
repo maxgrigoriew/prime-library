@@ -1,8 +1,6 @@
-export const sessionCheck = async (reqt) => {
-    const data = await fetch('/api/user/session/check', {
-        body: JSON.stringify(reqt),
-        method: 'POST',
-    })
-    console.log('data', data)
-    return await data.json()
+import {apiRequest} from "@/shared/api/apiRequest.ts";
+
+export async function sessionCheck () {
+    const {data} = await apiRequest('user/session/check')
+    return data.result
 }

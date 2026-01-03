@@ -1,1 +1,1 @@
-export const BASE_URL = 'session'
+export const BASE_URL = 'session/check'
