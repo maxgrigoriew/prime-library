@@ -1,4 +1,18 @@
+<script setup>
+
+import {onMounted} from "vue";
+import {sessionCheck} from "@/entities/auth/api/methods/sessionCheck.js";
+import {useCheckDevice} from "@/entities/device/hooks/useCheckDevice.js";
+
+const isMobile = useCheckDevice()
+onMounted(async () => {
+
+  const data = await sessionCheck({})
+  console.log('data', data)
+})
+</script>
 <template>
+  {{isMobile}}
   <div class="grid-layout p-4 gap-12 bg-gray-100">
     <div class="greeting bg-blue-1 text-white p-4">greeting</div>
     <div class="profile bg-gray-2 p-4">profile</div>
