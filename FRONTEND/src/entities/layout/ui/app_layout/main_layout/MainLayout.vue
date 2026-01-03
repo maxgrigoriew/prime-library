@@ -4,7 +4,7 @@ import AppHeader from "../../app_header/AppHeader.vue";
 </script>
 
 <template>
-  <div class="flex d-gap-3">
+  <div>
     <app-header />
     <div class="ml-[102px] p-12">
       <slot />
