@@ -16,8 +16,12 @@ export const useLogin = () => {
         const { result } = await AUTH_API.login(reqt)
 
         setUser(result)
+    }
 
-        console.log('user', user.value)
+    const logout = async () => {
+        const { result } = await AUTH_API.logout()
+
+        setUser(result)
     }
 
 

@@ -4,6 +4,8 @@ import IconTasks from '@/assets/icons/tasks.svg?component';
 import IconHome from '@/assets/icons/home.svg?component';
 import IconDeals from '@/assets/icons/deals.svg?component';
 import AppHeaderLink from "./AppHeaderLink/AppHeaderLilnk.vue";
+import {logout} from "@/entities/auth/api/methods/logout.ts";
+import UiButton from "@/ui/UiButton/UiButton.vue";
 
 defineOptions({
   name: 'AppHeader'
@@ -25,6 +27,14 @@ defineOptions({
         </AppHeaderLink>
         <AppHeaderLink to="/login">
          login
+        </AppHeaderLink>
+
+        <UiButton @click="logout">
+          logout
+        </UiButton>
+        <AppHeaderLink to="/login">
+
+         logout
         </AppHeaderLink>
       </ul>
     </div>

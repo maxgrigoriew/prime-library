@@ -1,10 +1,10 @@
 <script setup>
-
 import {computed, onMounted, ref} from "vue";
 import {authFt} from "@/entities/auth/features/authFf.js";
 import {getToday} from "@/shared/date/index.js";
 import {useCheckDevice} from "@/entities/device/hooks/useCheckDevice.js";
 import {todoListFeature} from "@/entities/todos/features/todoListFeature.js";
+import {sessionCheck} from "@/entities/auth/api/methods/sessionCheck.js";
 
 const isMobile = useCheckDevice()
 
@@ -14,12 +14,16 @@ const {
   getUser
 } = authFt()
 
-const {todoList, loadTodoList} = todoListFeature()
 
+const {todoList, loadTodoList} = todoListFeature()
 const mobileClass = computed(() => isMobile.value && 'mobile')
+
 onMounted(async() => {
-  getUser()
+  await getUser()
+  sessionCheck()
   loadTodoList()
+
+
 })
 
 </script>

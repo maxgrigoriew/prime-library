@@ -11,11 +11,22 @@ const dirname = typeof __dirname !== 'undefined' ? __dirname : path.dirname(file
 export default defineConfig({
   plugins: [vue(), svgLoader({ defaultImport: 'component' }),],
   resolve: {
-    // alias: {
-    //   '@': path.resolve('./src'),
-    // },
     alias: {
-      '@': path.resolve(__dirname, 'src'),
+      '@': path.resolve('./src'),
+    },
+  },
+  server: {
+    open: true,
+    host: 'localhost',
+    port: 3000,
+    proxy: {
+      '/api': {
+        target: 'http://localhost:8080',
+        //target: 'https://crmpro-dev.rt.ru',
+        changeOrigin: true,
+        proxyTimeout: 30000,
+        timeout: 30000,
+      },
     },
   },
   test: {

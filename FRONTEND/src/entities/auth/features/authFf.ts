@@ -8,7 +8,7 @@ export const authFt = () => {
         try {
             await login({
                 email: 'khlopyanik@ural.ru',
-                password: '12345'
+                password: '12345',
             })
 
         } catch (error) {
