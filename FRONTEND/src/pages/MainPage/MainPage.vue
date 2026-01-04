@@ -3,15 +3,15 @@
 import {onMounted, ref} from "vue";
 import {authFt} from "@/entities/auth/features/authFf.js";
 const { getUser, user } = authFt()
-onMounted(async () => {
-  getUser()
+onMounted(  () => {
+    getUser()
 })
 
 </script>
 <template>
   <div class="grid-layout p-4 gap-12 bg-gray-100">
     <div class="greeting flex flex-col justify-between bg-blue-2 text-white p-[50px] rounded-[12px]">
-      <div class="text-2xl font-bold">Привет, {{user.firstName}}</div>
+      <div class="text-2xl font-bold">Привет, {{user?.firstName}}</div>
       <div>{{new Date().toLocaleDateString()}}</div>
     </div>
     <div class="profile bg-blue-3 rounded-[12px] p-[12px]">
