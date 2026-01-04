@@ -1,4 +1,4 @@
-import {colors, spacing} from './src/assets/tailwind'
+import {colors, spacing, screens} from './src/assets/tailwind'
 
 /** @type {import('tailwindcss').Config} */
 export default {
@@ -9,7 +9,8 @@ export default {
   theme: {
     extend: {},
     colors,
-    spacing
+    spacing,
+    screens
   },
   plugins: [],
   prefix: '',

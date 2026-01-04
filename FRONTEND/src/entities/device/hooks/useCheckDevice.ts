@@ -1,20 +1,20 @@
-import {onMounted, onUnmounted, ref} from "vue";
+import { onMounted, onUnmounted, ref } from 'vue';
 
-export const useCheckDevice = (width: number = 768) => {
-    const isMobile = ref(false)
+export const useCheckDevice = (width = 768) => {
+    const isMobile = ref(false);
 
     const check = () => {
-        isMobile.value = window.innerWidth < width
-    }
-
+        isMobile.value = window.innerWidth < width;
+    };
 
     onMounted(() => {
-        window.addEventListener('resize', check)
-    })
+        check();
+        window.addEventListener('resize', check);
+    });
 
     onUnmounted(() => {
-        window.removeEventListener('resize', check)
-    })
+        window.removeEventListener('resize', check);
+    });
 
-    return isMobile
-}
+    return isMobile; // Возвращаем ref напрямую
+};
