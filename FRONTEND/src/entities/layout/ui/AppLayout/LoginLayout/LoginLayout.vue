@@ -19,12 +19,12 @@ const {} = defineProps<Props>()
     <div class="weicome h-100vh flex-grow flex flex-col bg-grey-2 h-screen">
 
     </div>
-    <div class="sidebar w-[400px] py-32">
+    <div class="sidebar w-[400px] py-32 flex flex-col">
       <div class="h-1 bg-grey-2"></div>
-      <div>
+      <div class="px-12 flex-shrink">
         <div class="px-32 text-2xl font-bold ">Вход на сайт</div>
         <UiAlert type="secondary">
-          test
+          Продолжить вход с данными этой учетной записи
         </UiAlert>
 
         <UiButton type="secondary">sdf</UiButton>

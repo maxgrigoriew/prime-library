@@ -3,10 +3,12 @@
 import type {AlertType} from "./types.ts";
 import {computed} from "vue";
 import {ALERT_CLASSES_BY_TYPE} from "./constants.ts";
+import IconInfo from '@/assets/icons/info.svg?component'
 
 defineOptions({
   name: 'UiAlert',
   components: {
+    IconInfo
   }
 })
 
@@ -27,14 +29,12 @@ const iconComponent = computed(() => 'Icon' + icon)
 </script>
 
 <template>
-  <template>
-    <div class="flex gap-32" :class="alertTypeClass">
-      <div class="">
-        <component :is="iconComponent"/>
-      </div>
-      <div class="">
-        <slot/>
-      </div>
+  <div class="flex gap-32 rounded-[8px] px-16 py-12" :class="alertTypeClass">
+    <div>
+      <component :is="iconComponent"/>
     </div>
-  </template>
+    <div class="text-sm">
+      <slot/>
+    </div>
+  </div>
 </template>
