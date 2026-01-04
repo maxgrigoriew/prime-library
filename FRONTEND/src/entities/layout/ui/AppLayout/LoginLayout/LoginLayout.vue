@@ -13,7 +13,6 @@ type Props = {}
 
 const {} = defineProps<Props>()
 
-
 const input = ref('')
 
 </script>
@@ -32,8 +31,7 @@ const input = ref('')
         </UiAlert>
         <UiInput title="Логин" v-model="input" />
 
-        <UiInput title="Пароль" v-model="input" />
-
+        <UiInput title="Пароль" :visible="false" v-model="input" />
         <UiButton type="secondary" class="ml-auto w-100%">Войти</UiButton>
       </div>
       <div class="h-1 bg-grey-2 mt-auto"></div>
