@@ -2,7 +2,13 @@
 
 import {onMounted, ref} from "vue";
 import {authFt} from "@/entities/auth/features/authFf.js";
-const { getUser, user } = authFt()
+import {getToday} from "@/shared/date/index.js";
+
+const {
+  shortName,
+  firstName,
+  getUser
+} = authFt()
 onMounted(  () => {
     getUser()
 })
@@ -10,12 +16,12 @@ onMounted(  () => {
 </script>
 <template>
   <div class="grid-layout p-4 gap-12 bg-gray-100">
-    <div class="greeting flex flex-col justify-between bg-blue-2 text-white p-[50px] rounded-[12px]">
-      <div class="text-2xl font-bold">Привет, {{user?.firstName}}</div>
-      <div>{{new Date().toLocaleDateString()}}</div>
+    <div class=" greeting flex flex-col justify-between bg-blue-2 text-white p-[50px] rounded-[12px]">
+      <div class="text-2xl font-bold">Привет, {{firstName}}</div>
+      <div>{{getToday()}}</div>
     </div>
-    <div class="profile bg-blue-3 rounded-[12px] p-[12px]">
-
+    <div class="profile bg-blue-3 rounded-[12px] p-[12px] text-4xl flex justify-center items-center text-white font-bold">
+      {{shortName}}
 
     </div>
     <div class="funnel bg-white rounded-[12px] p-[12px]">funnel</div>

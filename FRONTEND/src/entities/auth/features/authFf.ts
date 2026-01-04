@@ -1,6 +1,6 @@
 import {useLogin} from "../hooks/useLogin.ts";
 
-const { login, user } = useLogin()
+const { login, firstName, shortName } = useLogin()
 
 export const authFt = () => {
 
@@ -13,12 +13,13 @@ export const authFt = () => {
 
         } catch (error) {
             console.log('error', error)
-            return Promise(error)
+            return error
         }
     }
 
     return {
-        getUser,
-        user
+        shortName,
+        firstName,
+        getUser
     }
 }
