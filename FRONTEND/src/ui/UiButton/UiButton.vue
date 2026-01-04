@@ -23,7 +23,7 @@ const buttonTypeClass = computed(() => BUTTON_CLASSES_BY_TYPE[type])
 </script>
 
 <template>
-  <button :class="[buttonTypeClass]" class="rounded-[4px] px-8 py-2">
+  <button :class="[buttonTypeClass]" class="rounded-[4px] px-12 py-6">
     <slot>
       {{text}}
     </slot>

@@ -29,7 +29,7 @@ const iconComponent = computed(() => 'Icon' + icon)
 </script>
 
 <template>
-  <div class="flex gap-32 rounded-[8px] px-16 py-12" :class="alertTypeClass">
+  <div class="flex gap-8 rounded-[8px] px-16 py-12" :class="alertTypeClass">
     <div>
       <component :is="iconComponent"/>
     </div>
