@@ -16,7 +16,7 @@ export interface ApiResponse<T = any> {
 
 export const apiRequest = async <T = any>(
     url: string,
-    body: any = null,
+    body: any = {},
     options: ApiRequestOptions = {}
 ): Promise<ApiResponse<T>> => {
     const path = HOST + url;
