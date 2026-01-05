@@ -4,19 +4,16 @@ import {authFt} from "@/entities/auth/features/authFf.js";
 import {getToday} from "@/shared/date/index.js";
 import {useCheckDevice} from "@/entities/device/hooks/useCheckDevice.js";
 import {todoListFeature} from "@/entities/todos/features/todoListFeature.js";
-import UiButton from "@/ui/UiButton/UiButton.vue";
+import TodoList from "@/entities/todos/ui/DodoList/TodoList.vue";
 
 const isMobile = useCheckDevice()
 
 const {
   shortName,
   firstName,
-  loadMyProfile,
-  closeMyProfile
 } = authFt()
 
-
-const {todoList, loadTodoList} = todoListFeature()
+const {todoList, loadTodoList, removeTodo} = todoListFeature()
 const mobileClass = computed(() => isMobile.value && 'mobile')
 
 onMounted(() => {
@@ -25,7 +22,7 @@ onMounted(() => {
 })
 
 </script>
-<template>d
+<template>
   <div :class="mobileClass" class="grid-layout p-4 gap-12 bg-gray-100">
     <div class="greeting flex flex-col justify-between bg-blue-2 text-white p-[50px] rounded-[12px]">
       <div class="text-2xl font-bold">Привет, {{ firstName }}</div>
@@ -39,13 +36,10 @@ onMounted(() => {
 
     <div class="funnel bg-white rounded-[12px] p-[12px]">funnel</div>
     <div class="todos bg-white rounded-[12px] p-[12px]">
-      {{ todoList }}
+      <TodoList :todos="todoList" @remove="removeTodo"/>
     </div>
     <div class="calendar bg-gray-3 rounded-[12px] p-[12px]">calendar</div>
 
-    <UiButton @click="loadMyProfile">Авторизоваться</UiButton>
-    <UiButton @click="loadTodoList">получить todo</UiButton>
-    <UiButton @click="closeMyProfile">Закрыть</UiButton>
   </div>
 </template>
 
