@@ -1,5 +1,5 @@
 import {useLogin} from "../hooks/useLogin.ts";
-import {sessionCheck} from "../api/methods/sessionCheck.ts";
+
 import {useRouter} from "vue-router";
 
 const {
@@ -7,8 +7,10 @@ const {
     userPassword,
     firstName,
     shortName,
+    session,
     login,
-    logout
+    logout,
+    getSession
 } = useLogin()
 
 export const authFt = () => {
@@ -21,17 +23,12 @@ export const authFt = () => {
                 email: userLogin.value,
                 password: userPassword.value,
             }
-
             await login(reqt)
-
-            await sessionCheck()
-
+            await loadSession()
             router.push('/')
-
 
         } catch (error) {
             console.log('error', error)
-            return error
         }
     }
 
@@ -46,12 +43,22 @@ export const authFt = () => {
         }
     }
 
+    const loadSession = async () => {
+        try {
+            await getSession()
+        } catch (error) {
+            console.log(error)
+        }
+    }
+
     return {
+        session,
         userLogin,
         userPassword,
         shortName,
         firstName,
         loadMyProfile,
-        closeMyProfile
+        closeMyProfile,
+        loadSession
     }
 }

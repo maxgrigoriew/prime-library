@@ -1,10 +1,9 @@
 <script setup>
-import {computed, onMounted, ref} from "vue";
+import {computed, onMounted} from "vue";
 import {authFt} from "@/entities/auth/features/authFf.js";
 import {getToday} from "@/shared/date/index.js";
 import {useCheckDevice} from "@/entities/device/hooks/useCheckDevice.js";
 import {todoListFeature} from "@/entities/todos/features/todoListFeature.js";
-import {sessionCheck} from "@/entities/auth/api/methods/sessionCheck.js";
 import UiButton from "@/ui/UiButton/UiButton.vue";
 
 const isMobile = useCheckDevice()
@@ -21,7 +20,7 @@ const {todoList, loadTodoList} = todoListFeature()
 const mobileClass = computed(() => isMobile.value && 'mobile')
 
 onMounted(() => {
-  sessionCheck()
+
   loadTodoList()
 })
 
