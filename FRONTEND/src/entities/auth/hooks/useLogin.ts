@@ -3,6 +3,9 @@ import {AUTH_API} from "../api";
 
 const user = ref(null)
 
+const userLogin = ref('')
+const userPassword = ref('')
+
 const firstName = computed(() => user.value?.lastName)
 const shortName = computed(() => user.value?.firstName[0] + ' ' + user.value?.lastName[0])
 
@@ -25,6 +28,8 @@ export const useLogin = () => {
     }
 
     return {
+        userLogin,
+        userPassword,
         firstName,
         shortName,
         login,

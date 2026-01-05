@@ -3,7 +3,6 @@
 import {computed} from "vue";
 import LoginLayout from "./LoginLayout/LoginLayout.vue";
 import MainLayout from "./MainLayout/MainLayout.vue";
-import {AppLayout} from "../types.ts";
 import {useRoute} from "vue-router";
 
 defineOptions({
@@ -16,7 +15,7 @@ defineOptions({
 
 const route = useRoute()
 
-const currentLayout = computed(() => `${route.meta.layout}Layout`)
+const currentLayout = computed(() => `${route?.meta?.layout}Layout`)
 
 </script>
 

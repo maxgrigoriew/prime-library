@@ -20,12 +20,9 @@ const {
 const {todoList, loadTodoList} = todoListFeature()
 const mobileClass = computed(() => isMobile.value && 'mobile')
 
-onMounted(async () => {
-  loadMyProfile()
+onMounted(() => {
   sessionCheck()
   loadTodoList()
-
-
 })
 
 </script>
