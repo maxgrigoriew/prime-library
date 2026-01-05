@@ -1,7 +1,9 @@
-import {apiRequest} from "../../../../shared/api/apiRequest.ts";
-import {BASE_URL} from "../index.ts";
+import {bindRequest} from "../../../../shared/api/doRequest.ts";
+
+const doRequest = bindRequest('/api/todo/')
+
 export async function getTodos (): Promise<any> {
-    const {data} = await apiRequest(BASE_URL + '/loadList')
+    const {data} = await doRequest('loadList')
 
     return data
 }

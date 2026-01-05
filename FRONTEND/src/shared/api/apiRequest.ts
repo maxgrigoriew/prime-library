@@ -1,5 +1,3 @@
-import {HOST} from "./constants.ts";
-
 export interface ApiRequestOptions {
     method?: string;
     headers?: Record<string, string>;
@@ -19,8 +17,6 @@ export const apiRequest = async <T = any>(
     body: any = {},
     options: ApiRequestOptions = {}
 ): Promise<ApiResponse<T>> => {
-    const path = HOST + url;
-
     const {
         method = 'POST',
         headers = {},
@@ -56,7 +52,7 @@ export const apiRequest = async <T = any>(
     }
 
     try {
-        const response = await fetch(path, {
+        const response = await fetch(url, {
             method,
             body: requestBody,
             headers: requestHeaders,

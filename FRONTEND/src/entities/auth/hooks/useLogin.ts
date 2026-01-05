@@ -24,7 +24,6 @@ export const useLogin = () => {
         setUser(result)
     }
 
-
     return {
         firstName,
         shortName,
