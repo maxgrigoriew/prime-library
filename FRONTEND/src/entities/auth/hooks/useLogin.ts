@@ -28,6 +28,7 @@ export const useLogin = () => {
     return {
         firstName,
         shortName,
-        login
+        login,
+        logout
     }
 }

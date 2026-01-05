@@ -1,10 +1,15 @@
 import {useLogin} from "../hooks/useLogin.ts";
 
-const { login, firstName, shortName } = useLogin()
+const {
+    firstName,
+    shortName,
+    login,
+    logout
+} = useLogin()
 
 export const authFt = () => {
 
-    const getUser = async () => {
+    const loadMyProfile = async () => {
         try {
             await login({
                 email: 'khlopyanik@ural.ru',
@@ -17,9 +22,19 @@ export const authFt = () => {
         }
     }
 
+    const closeMyProfile = async () => {
+        try {
+            await logout()
+            console.log('closeMe session')
+        } catch(error) {
+            console.log(error)
+        }
+    }
+
     return {
         shortName,
         firstName,
-        getUser
+        loadMyProfile,
+        closeMyProfile
     }
 }
