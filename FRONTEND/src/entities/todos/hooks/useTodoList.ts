@@ -4,14 +4,15 @@ import type {Todo, TodoMark} from "../types/types.ts";
 import {TODO_API} from "../api";
 import {throwErrorApi} from "../../../shared/api/throwErrorApi.ts";
 
-const { todoList, setTodos, removeTodoById, markTodoById } = useTodoListStore()
+const { todoList, newTodo, setTodos, removeTodoById, markTodoById, setTodo } = useTodoListStore()
 type ReturnShape = {
     todoList: Ref<Todo[]>
+    newTodo: Ref<string>
     getTodoList: () => Promise<void>
     remove: (id: number) => Promise<void>
     markTodo: (id: number) => Promise<void>
+    sendNewTodo: () => Promise<void>
 }
-
 
 export const useTodoList = (): ReturnShape => {
     const getTodoList = async() => {
@@ -55,10 +56,31 @@ export const useTodoList = (): ReturnShape => {
         }
     }
 
+    const sendNewTodo = async () => {
+        const reqt = {
+            text: newTodo.value,
+            id: null,
+        }
+
+        try {
+            const result = await TODO_API.sendNewTodo(reqt)
+            throwErrorApi(result)
+            setTodo('')
+
+            await getTodoList()
+            } catch (e) {
+
+        } finally {
+
+        }
+    }
+
     return {
         todoList,
+        newTodo,
         getTodoList,
         remove,
-        markTodo
+        markTodo,
+        sendNewTodo
     }
 }

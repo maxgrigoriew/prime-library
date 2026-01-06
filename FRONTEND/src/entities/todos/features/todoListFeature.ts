@@ -4,16 +4,20 @@ import type {Todo} from "../types/types.ts";
 
 const {
     todoList,
+    newTodo,
     getTodoList,
     remove,
-    markTodo
+    markTodo,
+    sendNewTodo
 } = useTodoList()
 
 type ReturnShape = {
     todoList: Ref<Todo[]>
+    newTodo: Ref<string>
     loadTodoList: () => Promise<void>
     removeTodo: (id: number) => Promise<void>
     handleMarkTodo: (id: number) => Promise<void>
+    handleSendNewTodo: () => Promise<void>
 }
 
 export const todoListFeature = (): ReturnShape => {
@@ -26,7 +30,7 @@ export const todoListFeature = (): ReturnShape => {
         }
     }
 
-    const removeTodo = async(id: number) => {
+    const removeTodo = async (id: number) => {
         try {
             await remove(id)
         } catch (error) {
@@ -35,9 +39,18 @@ export const todoListFeature = (): ReturnShape => {
         }
     }
 
-    const handleMarkTodo = async(id: number) => {
+    const handleMarkTodo = async (id: number) => {
         try {
             await markTodo(id)
+        } catch (error) {
+            console.log('error')
+            /* вывести тосты */
+        }
+    }
+
+    const handleSendNewTodo = async () => {
+        try {
+            await sendNewTodo()
         } catch (error) {
             console.log('error')
             /* вывести тосты */
@@ -48,9 +61,11 @@ export const todoListFeature = (): ReturnShape => {
 
     return {
         todoList,
+        newTodo,
         loadTodoList,
         removeTodo,
-        handleMarkTodo
+        handleMarkTodo,
+        handleSendNewTodo
     }
 }
 

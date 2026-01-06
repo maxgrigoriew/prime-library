@@ -7,8 +7,12 @@ export type Todo = {
     done: boolean;
 };
 
-
 export type TodoMark = {
     id: number,
     done: boolean
+}
+
+export type NewTodo = {
+    id: number | null,
+    text: string
 }

@@ -11,25 +11,22 @@ defineOptions({
 type Props = {
   text?: string
   type?: ButtonType
+  disabled?: boolean
 }
 
 const {
   type = 'primary',
-  text
+  text,
+  disabled = false
 } = defineProps<Props>()
-
 
 const buttonTypeClass = computed(() => BUTTON_CLASSES_BY_TYPE[type])
 </script>
 
 <template>
-  <button :class="[buttonTypeClass]" class="rounded-[4px] px-12 py-6">
+  <button :disabled="disabled" :class="[buttonTypeClass]" class="rounded-[4px] px-12 py-6">
     <slot>
-      {{text}}
+      {{ text }}
     </slot>
   </button>
 </template>
-
-<style scoped>
-
-</style>

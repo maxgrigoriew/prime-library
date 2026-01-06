@@ -13,7 +13,7 @@ defineOptions({
 })
 
 type Props = {
-  title: string
+  title?: string
   placeholder?: string
   visible?: boolean
 }
