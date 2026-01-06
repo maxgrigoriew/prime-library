@@ -13,7 +13,12 @@ const {
   firstName,
 } = authFt()
 
-const {todoList, loadTodoList, removeTodo} = todoListFeature()
+const {
+  todoList,
+  loadTodoList,
+  removeTodo,
+  handleMarkTodo
+} = todoListFeature()
 const mobileClass = computed(() => isMobile.value && 'mobile')
 
 onMounted(() => {
@@ -36,7 +41,7 @@ onMounted(() => {
 
     <div class="funnel bg-white rounded-[12px] p-[12px]">funnel</div>
     <div class="todos bg-white rounded-[12px] p-[12px]">
-      <TodoList :todos="todoList" @remove="removeTodo"/>
+      <TodoList :todos="todoList" @mark="handleMarkTodo" @remove="removeTodo"/>
     </div>
     <div class="calendar bg-gray-3 rounded-[12px] p-[12px]">calendar</div>
 

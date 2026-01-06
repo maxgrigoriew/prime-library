@@ -1,13 +1,14 @@
 import {useTodoListStore} from "../stores/useTodoListStore.ts";
 import type {Ref} from "vue";
-import type {Todo} from "../types/types.ts";
+import type {Todo, TodoMark} from "../types/types.ts";
 import {TODO_API} from "../api";
 
-const { todoList, setTodos, removeTodoById } = useTodoListStore()
+const { todoList, setTodos, removeTodoById, markTodoById } = useTodoListStore()
 type ReturnShape = {
     todoList: Ref<Todo[]>
     getTodoList: () => Promise<void>
-    removeTodo: (id: number) => Promise<void>
+    remove: (id: number) => Promise<void>
+    markTodo: (mark: TodoMark) => Promise<void>
 }
 
 
@@ -22,7 +23,7 @@ export const useTodoList = (): ReturnShape => {
         }
     }
 
-    const removeTodo = async(id: number) => {
+    const remove = async(id: number) => {
         try {
             await TODO_API.removeTodo(id)
 
@@ -32,9 +33,19 @@ export const useTodoList = (): ReturnShape => {
         }
     }
 
+    const markTodo = async (mark: TodoMark) => {
+        try {
+            await TODO_API.markTodo(mark)
+            markTodoById(mark.id)
+        } catch (e) {
+            console.log(e)
+        }
+    }
+
     return {
         todoList,
         getTodoList,
-        removeTodo
+        remove,
+        markTodo
     }
 }

@@ -6,3 +6,9 @@ export type Todo = {
     text: string;
     done: boolean;
 };
+
+
+export type TodoMark = {
+    id: number,
+    done: boolean
+}

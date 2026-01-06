@@ -30,7 +30,7 @@ export const apiRequest = async <T = any>(
     };
 
     if (body !== null && !(body instanceof FormData) && !headers['Content-Type']) {
-        requestHeaders['Content-Type'] = 'application/json';
+        requestHeaders['Content-Type'] = 'application/json;charset=utf-8';
     }
 
     // Тело запроса
