@@ -1,6 +1,6 @@
 import {useTodoList} from './../hooks/useTodoList.ts'
 import type {Ref} from "vue";
-import type {Todo, TodoMark} from "../types/types.ts";
+import type {Todo} from "../types/types.ts";
 
 const {
     todoList,
@@ -13,7 +13,7 @@ type ReturnShape = {
     todoList: Ref<Todo[]>
     loadTodoList: () => Promise<void>
     removeTodo: (id: number) => Promise<void>
-    handleMarkTodo: (mark: TodoMark) => Promise<void>
+    handleMarkTodo: (id: number) => Promise<void>
 }
 
 export const todoListFeature = (): ReturnShape => {
@@ -35,9 +35,9 @@ export const todoListFeature = (): ReturnShape => {
         }
     }
 
-    const handleMarkTodo = async(mark: TodoMark) => {
+    const handleMarkTodo = async(id: number) => {
         try {
-            await markTodo(mark)
+            await markTodo(id)
         } catch (error) {
             console.log('error')
             /* вывести тосты */

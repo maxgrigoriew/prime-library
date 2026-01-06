@@ -20,7 +20,6 @@ export const createNewRouter = () => {
         history: createWebHistory(),
         routes,
     });
-    console.log('router', router)
 
     router.beforeEach(async (to, from, next) => {
         await loadSession()

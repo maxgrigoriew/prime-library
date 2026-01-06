@@ -1,16 +1,4 @@
-export interface ApiRequestOptions {
-    method?: string;
-    headers?: Record<string, string>;
-    timeout?: number | null;
-    signal?: AbortSignal;
-}
-
-export interface ApiResponse<T = any> {
-    data: T | null;
-    error: Error | null;
-    status: number | null;
-    ok: boolean;
-}
+import type {ApiRequestOptions, ApiResponse} from "./types.ts";
 
 export const apiRequest = async <T = any>(
     url: string,

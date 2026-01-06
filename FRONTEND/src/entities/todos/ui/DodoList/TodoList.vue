@@ -13,7 +13,6 @@ type Props = {
 
 const {todos} = defineProps<Props>()
 
-
 const emit = defineEmits<{
   remove: [id: number]
   mark: [id: number]
@@ -24,14 +23,10 @@ const emit = defineEmits<{
   <div class="flex flex-col gap-y-12">
     <div v-for="todo in todos" :key="todo.id">
       <div class="flex p-4 gap-12 align-middle cursor-pointer border border-b-grey-2 rounded">
-        <input type="checkbox" class="cursor-pointer" :checked="todo.done" @change="emit('mark', {
-          id: todo.id,
-          done: !todo.done
-        })">
+        <input type="checkbox" class="cursor-pointer" :checked="todo.done" @change="emit('mark', todo.id)">
         <div>{{todo.text}}</div>
         <IconTrash class="ml-auto" @click="emit('remove', todo.id)"/>
       </div>
     </div>
   </div>
-
 </template>

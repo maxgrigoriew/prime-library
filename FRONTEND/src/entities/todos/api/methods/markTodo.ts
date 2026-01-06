@@ -4,5 +4,7 @@ import type {TodoMark} from "../../types/types.ts";
 const doRequest = bindRequest('/api/todo/')
 
 export async function markTodo(mark: TodoMark): Promise<any> {
-    await doRequest('mark', mark)
+    const result = await doRequest('mark', mark)
+
+    return result
 }
