@@ -27,7 +27,7 @@ onMounted(loadTodoList)
 
 </script>
 <template>
-  <div :class="mobileClass" class="grid-layout p-4 gap-12 bg-gray-100">
+  <div :class="mobileClass" class="grid-layout p-4 gap-20 bg-gray-100">
     <div class="greeting flex flex-col justify-between bg-blue-2 text-white p-[50px] rounded-[12px]">
       <div class="text-2xl font-bold">Привет, {{ firstName }}</div>
       <div>{{ getToday() }}</div>
@@ -41,7 +41,7 @@ onMounted(loadTodoList)
     <div class="todos shadow-custom bg-white rounded-[12px] p-[12px]">
       <TodoList v-model="newTodo" :todos="todoList" @mark="handleMarkTodo" @remove="removeTodo" @send="handleSendNewTodo"/>
     </div>
-    <div class="calendar shadow-custom bg-gray-3 rounded-[12px] p-[12px]">calendar</div>
+    <div class="calendar shadow-custom  bg-gray-3 rounded-[12px] p-[12px]">calendar</div>
 
   </div>
 </template>
@@ -53,7 +53,7 @@ onMounted(loadTodoList)
     "greeting greeting profile"
     "funnel todos calendar";
   grid-template-columns: 2fr 2fr 1fr;
-  grid-template-rows: 300px auto;
+  grid-template-rows: minmax(240px, 1fr) minmax(0, 3fr);
 }
 
 .mobile.grid-layout {
@@ -63,7 +63,7 @@ onMounted(loadTodoList)
     "profile calendar"
     "funnel todos";
   grid-template-columns: 1fr 1fr;
-  grid-template-rows: 200px minmax(200px, auto) auto;
+  grid-template-rows: 200px minmax(200px, 1fr) 1fr;
 }
 
 .greeting {

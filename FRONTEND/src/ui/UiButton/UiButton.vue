@@ -21,10 +21,11 @@ const {
 } = defineProps<Props>()
 
 const buttonTypeClass = computed(() => BUTTON_CLASSES_BY_TYPE[type])
+const buttonDisabledClass = computed(() => disabled ? 'bg-grey-3 cursor-default' : '')
 </script>
 
 <template>
-  <button :disabled="disabled" :class="[buttonTypeClass]" class="rounded-[4px] px-12 py-6">
+  <button :disabled="disabled" :class="[buttonTypeClass, buttonDisabledClass]" class="rounded-[4px] px-12 py-6">
     <slot>
       {{ text }}
     </slot>
