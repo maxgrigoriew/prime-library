@@ -1,6 +1,7 @@
 <script lang="ts" setup="">
 
 import type {Todo} from "@/entities/todos/types/types.ts";
+import IconTrash from '@/assets/icons/trash.svg'
 import IconNotes from '@/assets/icons/notes.svg?component'
 import UiInput from "@/ui/UiInput/UiInput.vue";
 import UiButton from "@/ui/UiButton/UiButton.vue";
@@ -33,7 +34,7 @@ const updateNewTodoProxy = computed<string>({
 <template>
   <div class="flex flex-col gap-y-12 rounded-[12px]">
     <div class="flex gap-12 items-center">
-      <div class="bg-banana-2 w-32 h-32 flex justify-center items-center rounded-[4px]">
+      <div class="bg-banana-1 w-32 h-32 flex justify-center items-center rounded-[4px]">
         <IconNotes/>
       </div>
       <div class="font-medium">Мои задачи</div>

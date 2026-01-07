@@ -6,7 +6,7 @@ const {
     todoList,
     newTodo,
     getTodoList,
-    remove,
+    removeTodo,
     markTodo,
     sendNewTodo
 } = useTodoList()
@@ -15,7 +15,7 @@ type ReturnShape = {
     todoList: Ref<Todo[]>
     newTodo: Ref<string>
     loadTodoList: () => Promise<void>
-    removeTodo: (id: number) => Promise<void>
+    handleRemoveTodo: (id: number) => Promise<void>
     handleMarkTodo: (id: number) => Promise<void>
     handleSendNewTodo: () => Promise<void>
 }
@@ -30,9 +30,9 @@ export const todoListFeature = (): ReturnShape => {
         }
     }
 
-    const removeTodo = async (id: number) => {
+    const handleRemoveTodo = async (id: number) => {
         try {
-            await remove(id)
+            await removeTodo(id)
         } catch (error) {
             console.log('error')
             /* вывести тосты */
@@ -63,7 +63,7 @@ export const todoListFeature = (): ReturnShape => {
         todoList,
         newTodo,
         loadTodoList,
-        removeTodo,
+        handleRemoveTodo,
         handleMarkTodo,
         handleSendNewTodo
     }

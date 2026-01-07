@@ -9,7 +9,7 @@ type ReturnShape = {
     todoList: Ref<Todo[]>
     newTodo: Ref<string>
     getTodoList: () => Promise<void>
-    remove: (id: number) => Promise<void>
+    removeTodo: (id: number) => Promise<void>
     markTodo: (id: number) => Promise<void>
     sendNewTodo: () => Promise<void>
 }
@@ -25,7 +25,7 @@ export const useTodoList = (): ReturnShape => {
         }
     }
 
-    const remove = async(id: number) => {
+    const removeTodo = async(id: number) => {
         try {
             await TODO_API.removeTodo(id)
 
@@ -79,7 +79,7 @@ export const useTodoList = (): ReturnShape => {
         todoList,
         newTodo,
         getTodoList,
-        remove,
+        removeTodo,
         markTodo,
         sendNewTodo
     }

@@ -17,7 +17,7 @@ const {
   todoList,
   newTodo,
   loadTodoList,
-  removeTodo,
+  handleRemoveTodo,
   handleMarkTodo,
   handleSendNewTodo
 } = todoListFeature()
@@ -39,7 +39,7 @@ onMounted(loadTodoList)
     </div>
     <div class="funnel shadow-custom bg-white rounded-[12px] p-[12px]">funnel</div>
     <div class="todos shadow-custom bg-white rounded-[12px] p-[12px]">
-      <TodoList v-model="newTodo" :todos="todoList" @mark="handleMarkTodo" @remove="removeTodo" @send="handleSendNewTodo"/>
+      <TodoList v-model="newTodo" :todos="todoList" @mark="handleMarkTodo" @remove="handleRemoveTodo" @send="handleSendNewTodo"/>
     </div>
     <div class="calendar shadow-custom  bg-gray-3 rounded-[12px] p-[12px]">calendar</div>
 
