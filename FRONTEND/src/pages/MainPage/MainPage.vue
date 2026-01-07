@@ -5,10 +5,9 @@ import {getToday} from "@/shared/date/index.js";
 import {useCheckDevice} from "@/entities/device/hooks/useCheckDevice.js";
 import {todoListFeature} from "@/entities/todos/features/todoListFeature.js";
 import TodoList from "@/entities/todos/ui/DodoList/TodoList.vue";
-import {useConfirm} from  "@/ui/UiConfirm/useConfirm.js"
+import {showConfirm} from  "@/ui/UiConfirm/useConfirm.js"
 import UiButton from "@/ui/UiButton/UiButton.vue";
 
-const {showConfirm} = useConfirm()
 const isMobile = useCheckDevice()
 
 const {
@@ -27,7 +26,7 @@ const {
 const mobileClass = computed(() => isMobile.value && 'mobile')
 
 const confFunction = async () => {
-  const result = await showConfirm()
+  const result = await showConfirm('hello')
 
   console.log(result)
 }
