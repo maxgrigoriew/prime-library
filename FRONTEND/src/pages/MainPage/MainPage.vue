@@ -5,7 +5,10 @@ import {getToday} from "@/shared/date/index.js";
 import {useCheckDevice} from "@/entities/device/hooks/useCheckDevice.js";
 import {todoListFeature} from "@/entities/todos/features/todoListFeature.js";
 import TodoList from "@/entities/todos/ui/DodoList/TodoList.vue";
+import {useConfirm} from  "@/ui/UiConfirm/useConfirm.js"
+import UiButton from "@/ui/UiButton/UiButton.vue";
 
+const {showConfirm} = useConfirm()
 const isMobile = useCheckDevice()
 
 const {
@@ -23,10 +26,16 @@ const {
 } = todoListFeature()
 const mobileClass = computed(() => isMobile.value && 'mobile')
 
+const confFunction = async () => {
+  const result = await showConfirm()
+
+  console.log(result)
+}
 onMounted(loadTodoList)
 
 </script>
 <template>
+  <UiButton @click="confFunction">Click</UiButton>
   <div :class="mobileClass" class="grid-layout p-4 gap-20 bg-gray-100">
     <div class="greeting flex flex-col justify-between bg-blue-2 text-white p-[50px] rounded-[12px]">
       <div class="text-2xl font-bold">Привет, {{ firstName }}</div>
