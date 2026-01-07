@@ -1,6 +1,6 @@
 <script lang="ts" setup="">
 
-import type {Todo} from "@/entities/todos/types/types.ts";
+import type {Todo} from "@/entities/todoList/types/types.ts";
 import IconTrash from '@/assets/icons/trash.svg'
 import IconNotes from '@/assets/icons/notes.svg?component'
 import UiInput from "@/ui/UiInput/UiInput.vue";
@@ -12,11 +12,12 @@ defineOptions({
 })
 
 type Props = {
-  todos: Todo[]
+  todoList: Todo[]
   modelValue: string
+  loading: boolean
 }
 
-const {todos, modelValue} = defineProps<Props>()
+const {todoList, modelValue, loading} = defineProps<Props>()
 
 const emit = defineEmits<{
   'update:modelValue': [string]
@@ -39,11 +40,11 @@ const updateNewTodoProxy = computed<string>({
       </div>
       <div class="font-medium">Мои задачи</div>
     </div>
-
+    {{loading}}
     <div class="flex flex-col overflow-y-auto">
-      <div v-for="todo in todos" :key="todo.id">
+      <div v-for="todo in todoList" :key="todo.id">
         <div class="group flex items-center py-12 gap-12 cursor-pointer rounded-lg transition-colors duration-200">
-          <input type="checkbox" class="cursor-pointer" :checked="todo.done" @change="emit('mark', todo.id)">
+          <input type="checkbox" class="cursor-pointer" :disabled="loading" :checked="todo.done" @change="emit('mark', todo.id)">
           <div class="flex-1">{{ todo.text }}</div>
 
           <IconTrash
@@ -60,9 +61,10 @@ const updateNewTodoProxy = computed<string>({
           v-model="updateNewTodoProxy"
           placeholder="Добавьте задачу"
           class="flex-grow"
+          @keydown.enter.prevent.exact="emit('send')"
       />
       <UiButton
-          :disabled="!updateNewTodoProxy"
+          :disabled="!updateNewTodoProxy || loading"
           class="flex justify-center items-center w-40 h-40 border flex-none p-4 rounded-full cursor-pointer"
           @click="emit('send')">
         >

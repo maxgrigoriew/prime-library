@@ -3,13 +3,14 @@ import type {TodoReturnShape} from "../stores/useTodoListStore.ts";
 
 const {
     todoState,
+    isLoadingTodoList,
     getTodoList,
     removeTodo,
     markTodo,
     sendNewTodo
 } = useTodoList()
 
-type ReturnShape = Pick<TodoReturnShape, 'todoState'> & {
+type ReturnShape = Pick<TodoReturnShape, 'todoState' | 'isLoadingTodoList'> & {
     loadTodoList: () => Promise<void>
     handleRemoveTodo: (id: number) => Promise<void>
     handleMarkTodo: (id: number) => Promise<void>
@@ -57,6 +58,8 @@ export const todoListFeature = (): ReturnShape => {
 
     return {
         todoState,
+        isLoadingTodoList,
+
         loadTodoList,
         handleRemoveTodo,
         handleMarkTodo,

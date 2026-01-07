@@ -2,9 +2,10 @@ import {type TodoReturnShape, useTodoListStore} from "../stores/useTodoListStore
 import type {Todo, TodoMark} from "../types/types.ts";
 import {TODO_API} from "../api";
 import {throwErrorApi} from "../../../shared/api/throwErrorApi.ts";
+import {DataState} from "../../../shared/dataState";
 
-const { todoState, setTodos, removeTodoById, markTodoById, setTodo } = useTodoListStore()
-type ReturnShape = Pick<TodoReturnShape, 'todoState'> & {
+const { todoState,isLoadingTodoList, setTodoState, setTodos, removeTodoById, markTodoById, setTodo } = useTodoListStore()
+type ReturnShape = Pick<TodoReturnShape, 'todoState' | 'isLoadingTodoList'> & {
     getTodoList: () => Promise<void>
     removeTodo: (id: number) => Promise<void>
     markTodo: (id: number) => Promise<void>
@@ -14,11 +15,15 @@ type ReturnShape = Pick<TodoReturnShape, 'todoState'> & {
 export const useTodoList = (): ReturnShape => {
     const getTodoList = async() => {
         try {
+            setTodoState(DataState.Loading)
             const {result} = await TODO_API.getTodos()
 
             setTodos(result)
+            setTodoState(DataState.Success)
         } catch(error) {
             console.log('error', error)
+            setTodoState(DataState.Failed)
+        } finally {
         }
     }
 
@@ -74,6 +79,8 @@ export const useTodoList = (): ReturnShape => {
 
     return {
         todoState,
+        isLoadingTodoList,
+
         getTodoList,
         removeTodo,
         markTodo,

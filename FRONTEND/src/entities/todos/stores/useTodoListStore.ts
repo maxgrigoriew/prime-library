@@ -1,10 +1,12 @@
 import type {Todo} from '../types/types.ts'
 import {createGlobalState} from "@vueuse/core";
-import {reactive} from "vue";
+import {computed, type ComputedRef, reactive} from "vue";
 import {DataState} from "../../../shared/dataState";
 
 export type TodoReturnShape = {
     todoState: TodoState
+    isLoadingTodoList: ComputedRef<boolean>
+    setTodoState: (todo: DataState) => void
     setTodos: (todos: Todo[]) => void
     setTodo: (todo: string) => void
     removeTodoById: (id: number) => void
@@ -25,6 +27,12 @@ const getDefaultState = (): TodoState => ({
 
 export const useTodoListStore = createGlobalState((): TodoReturnShape => {
     const todoState = reactive(getDefaultState())
+
+    const isLoadingTodoList = computed(() => todoState.state === DataState.Loading)
+
+    const setTodoState = (state: DataState): void => {
+        todoState.state = state
+    }
 
     const setTodos = (todos: Todo[]) => {
         todoState.list = todos
@@ -54,6 +62,9 @@ export const useTodoListStore = createGlobalState((): TodoReturnShape => {
 
     return {
         todoState,
+        isLoadingTodoList,
+
+        setTodoState,
         setTodo,
         setTodos,
         removeTodoById,
