@@ -1,176 +1,148 @@
-// confirm-enhanced.js
-export function showConfirm(message, options = {}) {
-    return new Promise((resolve) => {
+import {h, render, defineComponent, ref} from 'vue';
 
-        console.log('inner')
-        const config = {
-            title: options.title || 'Подтверждение',
-            okText: options.okText || 'Да',
-            cancelText: options.cancelText || 'Нет',
-            type: options.type || 'default' // default, warning, danger
-        };
+type ConfirmConfig = {
+    title?: string;
+    message?: string;
+    confirmText?: string;
+    cancelText?: string;
+    type?: 'default' | 'warning' | 'danger' | 'info' | 'success';
+    showCancel?: boolean;
+};
 
-        // Создаем контейнер
-        const container = document.createElement('div');
-        container.className = 'confirm-container';
+export function useConfirm() {
 
-        // HTML
-        container.innerHTML = `
-      <div class="confirm-overlay">
-        <div class="confirm-box confirm-${config.type}">
-          ${config.title ? `<h3 class="confirm-title">${config.title}</h3>` : ''}
-          <p class="confirm-message">${message}</p>
-          <div class="confirm-buttons">
-            <button class="confirm-button confirm-cancel">${config.cancelText}</button>
-            <button class="confirm-button confirm-ok">${config.okText}</button>
-          </div>
-        </div>
-      </div>
-    `;
+    const showConfirm = (options: ConfirmConfig) => {
+        return new Promise((resolve) => {
+            const container = document.createElement('div');
+            container.id = `confirm-${Date.now()}`;
+            document.body.appendChild(container);
 
-        // Находим элементы
-        const overlay = container.querySelector('.confirm-overlay');
-        const box = container.querySelector('.confirm-box');
-        const cancelBtn = container.querySelector('.confirm-cancel');
-        const okBtn = container.querySelector('.confirm-ok');
+            const ConfirmDialog = defineComponent({
+                setup() {
+                    const isVisible = ref(false);
+                    const isClosing = ref(false);
 
-        // Функция закрытия
-        const close = (result) => {
-            // Анимация исчезновения
-            box.style.transform = 'scale(0.95)';
-            box.style.opacity = '0';
-            overlay.style.opacity = '0';
-            document.body.removeChild(container);
-            resolve(result);
-            setTimeout(() => {
-                document.body.removeChild(container);
-                resolve(result); // Важно! Promise завершается
-            }, 200);
-        };
+                    const config: ConfirmConfig = {
+                        title: options.title || 'Подтверждение',
+                        message: options.message || 'Вы уверены?',
+                        confirmText: options.confirmText || 'Подтвердить',
+                        cancelText: options.cancelText || 'Отмена',
+                        type: options.type || 'warning',
+                        showCancel: options.showCancel !== false
+                    };
 
-        // Обработчики
-        cancelBtn.onclick = () => close(false);
-        okBtn.onclick = () => close(true);
-        overlay.onclick = (e) => {
-            if (e.target === overlay) close(false);
-        };
+                    // Показываем с анимацией
+                    setTimeout(() => {
+                        isVisible.value = true;
+                    }, 10);
 
-        // Закрытие по ESC
-        const escHandler = (e) => {
-            if (e.key === 'Escape') close(false);
-        };
-        document.addEventListener('keydown', escHandler);
+                    const confirm = () => {
+                        close(() => resolve(true));
+                    };
 
-        // Убираем обработчик после закрытия
-        const cleanup = () => {
-            document.removeEventListener('keydown', escHandler);
-        };
+                    const cancel = () => {
+                        close(() => resolve(false));
+                    };
 
-        // Добавляем в DOM
-        document.body.appendChild(container);
+                    const close = (callback) => {
+                        isClosing.value = true;
+                        setTimeout(() => {
+                            render(null, container);
+                            container.remove();
+                            callback();
+                        }, 300);
+                    };
 
-        // Анимация появления
-        setTimeout(() => {
-            box.style.transform = 'scale(1)';
-            box.style.opacity = '1';
-        }, 10);
+                    const handleKeydown = (e) => {
+                        if (e.key === 'Escape') cancel();
+                        if (e.key === 'Enter') confirm();
+                    };
 
-        // Убираем обработчик при удалении
-        container.addEventListener('remove', cleanup);
-    });
+                    document.addEventListener('keydown', handleKeydown);
+
+                    return {
+                        isVisible,
+                        isClosing,
+                        config,
+                        confirm,
+                        cancel
+                    };
+                },
+
+                render() {
+                    const overlayClass = [
+                        'fixed inset-0 z-[9999] flex items-center justify-center p-4 transition-all duration-300',
+                        this.isVisible ? 'bg-black bg-opacity-10' : 'bg-transparent',
+                        this.isClosing ? 'opacity-0' : 'opacity-100'
+                    ];
+
+                    const modalClass = [
+                        'flex flex-col gap-[20px] bg-white rounded-[12px] p-16 shadow-custom max-w-[500px] w-full transform transition-all duration-300 overflow-hidden',
+                        this.isVisible ? 'scale-100 opacity-100' : 'scale-95 opacity-0'
+                    ];
+
+                    return h('div', {
+                        class: overlayClass,
+                        onClick: this.cancel
+                    }, [
+                        h('div', {
+                            class: modalClass,
+                            onClick: (e) => e.stopPropagation()
+                        }, [
+
+                            // Заголовок
+                            h('div',
+                                [
+                                    h('h3', {
+                                        class: 'text-xl font-medium text-gray-900'
+                                    }, this.config.title)
+                                ]
+                            ),
+
+                            // Сообщение
+                            h('div', {class: ''},
+                                h('p', {
+                                    class: 'text-gray-600'
+                                }, this.config.message)
+                            ),
+
+                            // Кнопки
+                            h('div', {class: 'px-6 pb-6 flex gap-12'}, [
+
+                                this.config.showCancel && h('button', {
+                                    class: 'flex-1 py-8 px-8 rounded-[12px] text-gray-7 bg-blue-3 text-white font-medium hover:bg-blue-4 active:bg-grey-1 transition-all duration-200',
+                                    onClick: this.cancel
+                                }, this.config.cancelText),
+
+                                h('button', {
+                                    class: [
+                                        'flex-1 py-8 px-8 rounded-[12px] text-gray-7 bg-white shadow-custom font-medium hover:bg-grey-2 active:bg-grey-1 transition-all duration-200',
+                                        this.config.type === 'danger' ? 'bg-red-500 hover:bg-red-600 active:bg-red-700' :
+                                            this.config.type === 'warning' ? 'bg-amber-500 hover:bg-amber-600 active:bg-amber-700' :
+                                                'bg-blue-500 hover:bg-blue-600 active:bg-blue-700'
+                                    ].join(' '),
+                                    onClick: this.confirm
+                                }, this.config.confirmText)
+                            ])
+                        ])
+                    ]);
+                }
+            });
+
+            const app = h(ConfirmDialog);
+            render(app, container);
+        });
+    };
+
+    // Удобные методы-алиасы
+    const confirmDanger = (options) => showConfirm({...options, type: 'danger'});
+    const confirmWarning = (options) => showConfirm({...options, type: 'warning'});
+    const confirmInfo = (options) => showConfirm({...options, type: 'info'});
+
+    return {
+        showConfirm,
+        confirmDanger,
+        confirmWarning,
+        confirmInfo
+    };
 }
-
-// CSS (можно подключить отдельно)
-const style = document.createElement('style');
-style.textContent = `
-  .confirm-container {
-    position: fixed;
-    z-index: 10000;
-  }
-  
-  .confirm-overlay {
-    position: fixed;
-    top: 0; left: 0; right: 0; bottom: 0;
-    background: rgba(0, 0, 0, 0.5);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  
-    transition: opacity 0.2s;
-  }
-  
-  .confirm-box {
-    background: white;
-    border-radius: 12px;
-    padding: 24px;
-    max-width: 400px;
-    width: 90%;
-    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
-    transform: scale(0.95);
-    transition: all 0.2s;
-  }
-  
-  .confirm-warning {
-    border-top: 4px solid #f59e0b;
-  }
-  
-  .confirm-danger {
-    border-top: 4px solid #ef4444;
-  }
-  
-  .confirm-title {
-    margin: 0 0 12px 0;
-    font-size: 1.25rem;
-    font-weight: 600;
-  }
-  
-  .confirm-message {
-    margin: 0 0 24px 0;
-    color: #4b5563;
-    line-height: 1.5;
-  }
-  
-  .confirm-buttons {
-    display: flex;
-    gap: 12px;
-    justify-content: flex-end;
-  }
-  
-  .confirm-button {
-    padding: 10px 20px;
-    border-radius: 8px;
-    border: none;
-    font-weight: 500;
-    cursor: pointer;
-    transition: all 0.2s;
-    font-size: 0.95rem;
-    min-width: 80px;
-  }
-  
-  .confirm-cancel {
-    background-color: #f3f4f6;
-    color: #374151;
-  }
-  
-  .confirm-cancel:hover {
-    background-color: #e5e7eb;
-  }
-  
-  .confirm-ok {
-    background-color: #3b82f6;
-    color: white;
-  }
-  
-  .confirm-ok:hover {
-    background-color: #2563eb;
-  }
-  
-  .confirm-danger .confirm-ok {
-    background-color: #ef4444;
-  }
-  
-  .confirm-danger .confirm-ok:hover {
-    background-color: #dc2626;
-  }
-`;
-document.head.appendChild(style);

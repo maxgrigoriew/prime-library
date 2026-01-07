@@ -5,8 +5,6 @@ import {getToday} from "@/shared/date/index.js";
 import {useCheckDevice} from "@/entities/device/hooks/useCheckDevice.js";
 import {todoListFeature} from "@/entities/todos/features/todoListFeature.js";
 import TodoList from "@/entities/todos/ui/DodoList/TodoList.vue";
-import {showConfirm} from  "@/ui/UiConfirm/useConfirm.js"
-import UiButton from "@/ui/UiButton/UiButton.vue";
 
 const isMobile = useCheckDevice()
 
@@ -25,16 +23,12 @@ const {
 } = todoListFeature()
 const mobileClass = computed(() => isMobile.value && 'mobile')
 
-const confFunction = async () => {
-  const result = await showConfirm('hello')
-
-  console.log(result)
-}
-onMounted(loadTodoList)
+onMounted(async () => {
+  loadTodoList()
+})
 
 </script>
 <template>
-  <UiButton @click="confFunction">Click</UiButton>
   <div :class="mobileClass" class="grid-layout p-4 gap-20 bg-gray-100">
     <div class="greeting flex flex-col justify-between bg-blue-2 text-white p-[50px] rounded-[12px]">
       <div class="text-2xl font-bold">Привет, {{ firstName }}</div>
@@ -47,7 +41,7 @@ onMounted(loadTodoList)
     </div>
     <div class="funnel shadow-custom bg-white rounded-[12px] p-[12px]">funnel</div>
     <div class="todos shadow-custom bg-white rounded-[12px] p-[12px]">
-      <TodoList v-model="todoState.newTodo" :todo-list="todoState.list" :loading="isLoadingTodoList" @remove="handleRemoveTodo" @send="handleSendNewTodo"/>
+      <TodoList v-model="todoState.newTodo"  :todo-list="todoState.list" :loading="isLoadingTodoList" @mark="handleMarkTodo" @remove="handleRemoveTodo" @send="handleSendNewTodo"/>
     </div>
     <div class="calendar shadow-custom  bg-gray-3 rounded-[12px] p-[12px]">calendar</div>
 

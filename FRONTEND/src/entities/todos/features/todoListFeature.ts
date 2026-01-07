@@ -1,5 +1,8 @@
 import {useTodoList} from './../hooks/useTodoList.ts'
 import type {TodoReturnShape} from "../stores/useTodoListStore.ts";
+import {useConfirm} from  "@/ui/UiConfirm/useConfirm.js"
+
+const {showConfirm} = useConfirm()
 
 const {
     todoState,
@@ -29,6 +32,16 @@ export const todoListFeature = (): ReturnShape => {
 
     const handleRemoveTodo = async (id: number) => {
         try {
+            const result = await showConfirm({
+                message: 'Вы действительно хотите удалить задачу?',
+                cancelText: 'Отмена',
+                confirmText: 'Да',
+            })
+
+            if (!result) {
+                return
+            }
+
             await removeTodo(id)
         } catch (error) {
             console.log('error')
