@@ -31,7 +31,7 @@ const updateNewTodoProxy = computed<string>( {
 </script>
 
 <template>
-  <div class="flex flex-col gap-y-12 rounded-[8px] border p-12">
+  <div class="flex flex-col gap-y-12 rounded-[8px] p-12 shadow-custom">
     <div v-for="todo in todos" :key="todo.id">
       <div class="flex p-4 gap-12 align-middle cursor-pointer border border-b-grey-2 rounded">
         <input type="checkbox" class="cursor-pointer" :checked="todo.done" @change="emit('mark', todo.id)">
@@ -44,6 +44,7 @@ const updateNewTodoProxy = computed<string>( {
       <UiInput
           v-model="updateNewTodoProxy"
           placeholder="Добавьте задачу"
+          class="flex-grow"
       />
       <UiButton
           class="flex justify-center items-center w-40 h-40 border flex-none p-4 rounded-full cursor-pointer"

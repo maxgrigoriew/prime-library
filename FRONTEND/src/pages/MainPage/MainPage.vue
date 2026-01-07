@@ -37,11 +37,11 @@ onMounted(loadTodoList)
         class="profile bg-blue-3 rounded-[12px] p-[12px] text-4xl flex justify-center items-center text-white font-bold">
       {{ shortName }}
     </div>
-    <div class="funnel bg-white rounded-[12px] p-[12px]">funnel</div>
-    <div class="todos bg-white rounded-[12px] p-[12px]">
+    <div class="funnel shadow-custom bg-white rounded-[12px] p-[12px]">funnel</div>
+    <div class="todos shadow-custom bg-white rounded-[12px] p-[12px]">
       <TodoList v-model="newTodo" :todos="todoList" @mark="handleMarkTodo" @remove="removeTodo" @send="handleSendNewTodo"/>
     </div>
-    <div class="calendar bg-gray-3 rounded-[12px] p-[12px]">calendar</div>
+    <div class="calendar shadow-custom bg-gray-3 rounded-[12px] p-[12px]">calendar</div>
 
   </div>
 </template>
