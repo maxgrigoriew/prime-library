@@ -14,8 +14,7 @@ const {
 } = authFt()
 
 const {
-  todoList,
-  newTodo,
+  todoState,
   loadTodoList,
   handleRemoveTodo,
   handleMarkTodo,
@@ -39,7 +38,7 @@ onMounted(loadTodoList)
     </div>
     <div class="funnel shadow-custom bg-white rounded-[12px] p-[12px]">funnel</div>
     <div class="todos shadow-custom bg-white rounded-[12px] p-[12px]">
-      <TodoList v-model="newTodo" :todos="todoList" @mark="handleMarkTodo" @remove="handleRemoveTodo" @send="handleSendNewTodo"/>
+      <TodoList v-model="todoState.newTodo" :todos="todoState.list" @mark="handleMarkTodo" @remove="handleRemoveTodo" @send="handleSendNewTodo"/>
     </div>
     <div class="calendar shadow-custom  bg-gray-3 rounded-[12px] p-[12px]">calendar</div>
 

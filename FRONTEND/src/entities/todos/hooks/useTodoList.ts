@@ -1,13 +1,10 @@
-import {useTodoListStore} from "../stores/useTodoListStore.ts";
-import type {Ref} from "vue";
+import {type TodoReturnShape, useTodoListStore} from "../stores/useTodoListStore.ts";
 import type {Todo, TodoMark} from "../types/types.ts";
 import {TODO_API} from "../api";
 import {throwErrorApi} from "../../../shared/api/throwErrorApi.ts";
 
-const { todoList, newTodo, setTodos, removeTodoById, markTodoById, setTodo } = useTodoListStore()
-type ReturnShape = {
-    todoList: Ref<Todo[]>
-    newTodo: Ref<string>
+const { todoState, setTodos, removeTodoById, markTodoById, setTodo } = useTodoListStore()
+type ReturnShape = Pick<TodoReturnShape, 'todoState'> & {
     getTodoList: () => Promise<void>
     removeTodo: (id: number) => Promise<void>
     markTodo: (id: number) => Promise<void>
@@ -37,7 +34,7 @@ export const useTodoList = (): ReturnShape => {
 
     const markTodo = async (id: number) => {
         try {
-            const findTodo = todoList.value.find((todo: Todo) => todo.id === id)
+            const findTodo = todoState.list.find((todo: Todo) => todo.id === id)
             if (!findTodo) {
                 return
             }
@@ -58,7 +55,7 @@ export const useTodoList = (): ReturnShape => {
 
     const sendNewTodo = async () => {
         const reqt = {
-            text: newTodo.value,
+            text: todoState.newTodo,
             id: null,
         }
 
@@ -76,8 +73,7 @@ export const useTodoList = (): ReturnShape => {
     }
 
     return {
-        todoList,
-        newTodo,
+        todoState,
         getTodoList,
         removeTodo,
         markTodo,

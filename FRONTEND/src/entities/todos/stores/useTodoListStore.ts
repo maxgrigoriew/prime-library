@@ -1,38 +1,49 @@
 import type {Todo} from '../types/types.ts'
 import {createGlobalState} from "@vueuse/core";
-import {type Ref, ref} from "vue";
+import {reactive} from "vue";
+import {DataState} from "../../../shared/dataState";
 
-export type TodoListStoreReturn = {
-    todoList: Ref<Todo[]>
-    newTodo: Ref<string>
+export type TodoReturnShape = {
+    todoState: TodoState
     setTodos: (todos: Todo[]) => void
     setTodo: (todo: string) => void
     removeTodoById: (id: number) => void
     markTodoById: (id: number) => void
 }
 
-export const useTodoListStore = createGlobalState((): TodoListStoreReturn => {
-    const todoList = ref<Todo[]>([]);
-    const newTodo = ref<string>('')
+type TodoState = {
+    list: Todo[]
+    newTodo: string
+    state: DataState
+}
+
+const getDefaultState = (): TodoState => ({
+    list:[],
+    newTodo: '',
+    state: DataState.Init
+})
+
+export const useTodoListStore = createGlobalState((): TodoReturnShape => {
+    const todoState = reactive(getDefaultState())
 
     const setTodos = (todos: Todo[]) => {
-        todoList.value = todos
+        todoState.list = todos
     }
 
     const setTodo = (todo: string) => {
-        newTodo.value = todo
+        todoState.newTodo = todo
     }
 
     const removeTodoById = (id: number) => {
-        const index = todoList.value.findIndex((todo: Todo) => todo.id === id)
+        const index = todoState.list.findIndex((todo: Todo) => todo.id === id)
         if (index === -1) {
             return
         }
-        todoList.value.splice(index, 1)
+        todoState.list.splice(index, 1)
     }
 
     const markTodoById = (id: number) => {
-        const todo = todoList.value.find((todo: Todo) => todo.id === id);
+        const todo = todoState.list.find((todo: Todo) => todo.id === id);
 
         if (!todo) {
             return
@@ -42,8 +53,7 @@ export const useTodoListStore = createGlobalState((): TodoListStoreReturn => {
     };
 
     return {
-        todoList,
-        newTodo,
+        todoState,
         setTodo,
         setTodos,
         removeTodoById,

@@ -1,19 +1,15 @@
 import {useTodoList} from './../hooks/useTodoList.ts'
-import type {Ref} from "vue";
-import type {Todo} from "../types/types.ts";
+import type {TodoReturnShape} from "../stores/useTodoListStore.ts";
 
 const {
-    todoList,
-    newTodo,
+    todoState,
     getTodoList,
     removeTodo,
     markTodo,
     sendNewTodo
 } = useTodoList()
 
-type ReturnShape = {
-    todoList: Ref<Todo[]>
-    newTodo: Ref<string>
+type ReturnShape = Pick<TodoReturnShape, 'todoState'> & {
     loadTodoList: () => Promise<void>
     handleRemoveTodo: (id: number) => Promise<void>
     handleMarkTodo: (id: number) => Promise<void>
@@ -60,8 +56,7 @@ export const todoListFeature = (): ReturnShape => {
     /*TODO: добавить методы из хуков и обернуть их toasts */
 
     return {
-        todoList,
-        newTodo,
+        todoState,
         loadTodoList,
         handleRemoveTodo,
         handleMarkTodo,
