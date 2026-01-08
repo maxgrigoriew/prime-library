@@ -5,6 +5,10 @@
     { "path": "./tsconfig.node.json" }
   ],
   "compilerOptions": {
-    "erasableSyntaxOnly": false
+    "erasableSyntaxOnly": false,
+    "baseUrl": ".",
+    "paths": {
+      "@/*": ["src/*"]
+}
   },
 }
