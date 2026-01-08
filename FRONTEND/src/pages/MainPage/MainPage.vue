@@ -5,6 +5,8 @@ import {getToday} from "@/shared/date/index.js";
 import {useCheckDevice} from "@/entities/device/hooks/useCheckDevice.js";
 import {todoListFeature} from "@/entities/todos/features/todoListFeature.js";
 import TodoList from "@/entities/todos/ui/DodoList/TodoList.vue";
+import UiTooltip from "@/ui/UiTooltip/UiTooltip.vue";
+import UiButton from "@/ui/UiButton/UiButton.vue";
 
 const isMobile = useCheckDevice()
 
@@ -35,12 +37,20 @@ onMounted(async () => {
       <div class="text-2xl font-bold">Привет, {{ firstName }}</div>
       <div>{{ getToday() }}</div>
     </div>
-
     <div
         class="profile bg-blue-3 rounded-[12px] p-[12px] text-4xl flex justify-center items-center text-white font-bold">
       {{ shortName }}
     </div>
-    <div class="funnel shadow-custom bg-white rounded-[12px] p-[12px]">funnel</div>
+    <div class="funnel shadow-custom bg-white rounded-[12px] p-[12px]">
+      <ui-tooltip>
+        <template #trigger>
+          <UiButton>Кнопка</UiButton>
+        </template>
+        <div>
+          Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aut ipsa non quia rerum. Accusamus adipisci consectetur delectus laborum optio, quos ratione repudiandae! Animi illum inventore optio porro quam quos recusandae.
+        </div>
+      </ui-tooltip>
+    </div>
     <TodoList v-model="todoState.newTodo"  :todo-list="todoState.list" :loading="isLoadingTodoList" @mark="handleMarkTodo" @remove="handleRemoveTodo" @send="handleSendNewTodo" class="todos shadow-custom bg-white rounded-[12px] p-[12px]" />
     <div class="calendar shadow-custom  bg-gray-3 rounded-[12px] p-[12px]">calendar</div>
 
