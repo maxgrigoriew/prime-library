@@ -21,6 +21,7 @@ const {
   handleMarkTodo,
   handleSendNewTodo
 } = todoListFeature()
+
 const mobileClass = computed(() => isMobile.value && 'mobile')
 
 onMounted(async () => {
@@ -29,7 +30,7 @@ onMounted(async () => {
 
 </script>
 <template>
-  <div :class="mobileClass" class="grid-layout p-4 gap-20 bg-gray-100">
+  <div :class="mobileClass" class="grid-layout h-screen p-12 gap-20 bg-gray-100">
     <div class="greeting flex flex-col justify-between bg-blue-2 text-white p-[50px] rounded-[12px]">
       <div class="text-2xl font-bold">Привет, {{ firstName }}</div>
       <div>{{ getToday() }}</div>
@@ -40,9 +41,7 @@ onMounted(async () => {
       {{ shortName }}
     </div>
     <div class="funnel shadow-custom bg-white rounded-[12px] p-[12px]">funnel</div>
-    <div class="todos shadow-custom bg-white rounded-[12px] p-[12px]">
-      <TodoList v-model="todoState.newTodo"  :todo-list="todoState.list" :loading="isLoadingTodoList" @mark="handleMarkTodo" @remove="handleRemoveTodo" @send="handleSendNewTodo"/>
-    </div>
+    <TodoList v-model="todoState.newTodo"  :todo-list="todoState.list" :loading="isLoadingTodoList" @mark="handleMarkTodo" @remove="handleRemoveTodo" @send="handleSendNewTodo" class="todos shadow-custom bg-white rounded-[12px] p-[12px]" />
     <div class="calendar shadow-custom  bg-gray-3 rounded-[12px] p-[12px]">calendar</div>
 
   </div>

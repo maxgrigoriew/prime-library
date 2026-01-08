@@ -30,6 +30,7 @@ const updateNewTodoProxy = computed<string>({
   get: () => modelValue,
   set: (value: string) => emit('update:modelValue', value)
 })
+
 </script>
 
 <template>
@@ -40,7 +41,6 @@ const updateNewTodoProxy = computed<string>({
       </div>
       <div class="font-medium">Мои задачи</div>
     </div>
-    {{loading}}
     <div class="flex flex-col overflow-y-auto">
       <div v-for="todo in todoList" :key="todo.id">
         <div class="group flex items-center py-12 gap-12 cursor-pointer rounded-lg transition-colors duration-200">

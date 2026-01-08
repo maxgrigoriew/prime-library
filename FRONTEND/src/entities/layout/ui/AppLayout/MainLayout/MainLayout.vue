@@ -6,7 +6,7 @@ import AppHeader from "../../AppHeader/AppHeader.vue";
 <template>
   <div>
     <app-header />
-    <div class="ml-[102px] p-12">
+    <div class="ml-[102px]">
       <slot />
     </div>
   </div>
