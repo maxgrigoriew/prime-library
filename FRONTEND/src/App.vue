@@ -17,6 +17,32 @@
       </BadTooltip>
     </div>
 
+    <div>
+      Мой тултип
+    </div>
+
+    <ui-tooltip>
+      <template #trigger>
+        <UiButton>Кнопка</UiButton>
+      </template>
+      <div>
+        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aut ipsa non quia rerum. Accusamus adipisci
+        consectetur delectus laborum optio, quos ratione repudiandae! Animi illum inventore optio porro quam quos
+        recusandae.
+      </div>
+
+
+    </ui-tooltip>
+
+
+    <div>Тестовый тултип</div>
+
+    <UiTestTooltip>
+      <template #trigger>
+        <UiButton>Наведи на меня</UiButton>
+        a
+      </template>
+    </UiTestTooltip>
     <div class="demo-section">
       <h2>2. Решение: visibility: hidden</h2>
       <p>Сначала скрываем тултип, считаем позицию, потом показываем</p>
@@ -51,10 +77,13 @@
 </template>
 
 <script setup>
-import { ref } from 'vue'
+import {ref} from 'vue'
 import BadTooltip from "@/ui/UiTestTooltip/BadTooltip.vue";
 import GoodTooltip from "@/ui/UiTestTooltip/GoodTooltip.vue";
 import BetterTooltip from "@/ui/UiTestTooltip/BetterTooltip.vue";
+import UiTooltip from "@/ui/UiTooltip/UiTooltip.vue";
+import UiButton from "@/ui/UiButton/UiButton.vue";
+import UiTestTooltip from "@/ui/UiTestTooltip/UiTestTooltip.vue";
 
 const logs = ref([])
 
@@ -117,9 +146,23 @@ const resetAll = () => {
   border-radius: 4px;
 }
 
-.debug-logs .info { background: #3b82f6; }
-.debug-logs .warning { background: #f59e0b; }
-.debug-logs .error { background: #ef4444; }
-.debug-logs .success { background: #10b981; }
-.debug-logs .reset { background: #8b5cf6; }
+.debug-logs .info {
+  background: #3b82f6;
+}
+
+.debug-logs .warning {
+  background: #f59e0b;
+}
+
+.debug-logs .error {
+  background: #ef4444;
+}
+
+.debug-logs .success {
+  background: #10b981;
+}
+
+.debug-logs .reset {
+  background: #8b5cf6;
+}
 </style>

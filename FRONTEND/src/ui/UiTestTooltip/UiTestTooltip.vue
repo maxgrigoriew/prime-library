@@ -10,7 +10,7 @@ type Props = {
 }
 
 const {
-  byClick = false
+  byClick = true
 } = defineProps<Props>()
 
 const isVisible = ref(false)
@@ -22,17 +22,17 @@ const on = computed(() => {
   const events: Record<string, any> = {}
 
   if (byClick) {
-    events.click = show
+    events.click = handleShowToolti
   } else {
-    events.mouseenter = show
-    events.mouseleave = hide
+    events.mouseenter = handleShowToolti
+    events.mouseleave = handleHideToolti
   }
   console.log(events)
 
   return events
 })
 
-const show = (event: Event) => {
+const handleShowToolti = (event: Event) => {
   /* Отключаем всплытие чтобы handelClickOutlide не срабатывал и не акрывал обратно tooltip*/
   event.stopPropagation()
 
@@ -56,7 +56,7 @@ const handleClickOutside = (event: Event) => {
   isVisible.value = false
 }
 
-const hide = () => {
+const handleHideToolti = () => {
   isVisible.value = false
 }
 

@@ -11,12 +11,12 @@
 
     <div
         v-if="isVisible"
-        class="tooltip bad"
+        class="tooltip good"
         :style="tooltipStyle"
         ref="tooltipRef"
     >
       <div class="content">
-        <slot name="content" />
+        <slot name="content"/>
       </div>
       <div class="position-info">
         Позиция: {{ tooltipStyle.left }}, {{ tooltipStyle.top }}
@@ -26,42 +26,40 @@
 </template>
 
 <script setup>
-import { ref, nextTick } from 'vue'
+import {ref, nextTick} from 'vue'
+
+
 
 const props = defineProps({
-  label: { type: String, default: 'Наведи на меня' }
+  label: {type: String, default: 'Наведи на меня'}
 })
-
-const emit = defineEmits(['log'])
 
 const triggerRef = ref(null)
 const tooltipRef = ref(null)
 const isVisible = ref(false)
-const position = ref({ x: 0, y: 0 })
+const position = ref({x: 0, y: 0})
 
 const tooltipStyle = ref({
   left: '0px',
   top: '0px',
-  backgroundColor: '#ef4444',
-  visibility: 'hidden'
+  opacity: '0',
+  backgroundColor: '#10b981'
 })
 
-// ❌ ПЛОХО: Показываем сразу, потом считаем позицию
+// ✅ ХОРОШО: Сначала скрываем, считаем, потом показываем
 const show = async () => {
-  console.log('❌ BadTooltip: Показываем тултип')
-
-  // 1. Сразу делаем видимым
   isVisible.value = true
 
-  // 2. Ждем рендера (тултип появится в 0,0)
+
+  // 2. Ждем рендера (тултип в DOM, но невидимый)
   await nextTick()
+  console.log('tooltipRef 2', tooltipRef.value)
 
-  // 3. Теперь считаем позицию
-
+  // 3. Считаем позицию пока тултип невидим
   calculatePosition()
-  tooltipStyle.value.visibility = 'visible'
+    tooltipStyle.value.opacity = '1'
 
-  console.log('❌ BadTooltip: Тултип уже был показан в (0,0), теперь двигаем в', position.value)
+  console.log('✅ GoodTooltip: Тултип показан сразу в правильной позиции', position.value)
 }
 
 const hide = () => {
@@ -72,7 +70,6 @@ const calculatePosition = () => {
   if (!triggerRef.value || !tooltipRef.value) return
 
   const triggerRect = triggerRef.value.getBoundingClientRect()
-  const tooltipRect = tooltipRef.value.getBoundingClientRect()
 
   // Простая позиция: под триггером
   position.value = {
@@ -81,13 +78,10 @@ const calculatePosition = () => {
   }
 
   tooltipStyle.value = {
+    ...tooltipStyle.value,
     left: `${position.value.x}px`,
-    top: `${position.value.y}px`,
-    backgroundColor: '#ef4444',
-    visibility: 'hidden'
+    top: `${position.value.y}px`
   }
-
-  console.log('❌ BadTooltip: Перемещаем тултип в', position.value)
 }
 </script>
 
@@ -102,7 +96,7 @@ const calculatePosition = () => {
   color: white;
   border-radius: 6px;
   cursor: pointer;
-  transition: background 0.2s;
+  transition: background 2s;
 }
 
 .trigger:hover {
@@ -116,18 +110,7 @@ const calculatePosition = () => {
   color: white;
   box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
   z-index: 1000;
-  transition: all 0.1s; /* Быстрая анимация чтобы видеть прыжок */
+  transition: opacity 1s ease-out;
 }
 
-.tooltip.bad {
-  background: #ef4444;
-  border: 2px dashed #dc2626;
-}
-
-.position-info {
-  font-size: 10px;
-  opacity: 0.8;
-  margin-top: 4px;
-  font-family: monospace;
-}
 </style>

@@ -226,7 +226,7 @@ watch(isVisible, (newValue) => {
 
     <!-- Tooltip content -->
     <div
-        v-if="true"
+        v-if="false"
         ref="tooltipRef"
         :class="[
         tooltipStyleClasses,
