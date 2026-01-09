@@ -29,22 +29,6 @@ const tooltipRef = ref<HTMLElement | null>(null)
 const triggerRect = ref<DOMRect | null>(null)
 const tooltipRect = ref<DOMRect | null>(null)
 
-// const tooltipPositionStyles = computed(() => {
-//
-//
-//   let top = 0
-//   let left = 0
-//
-//   if (placement === 'top') {
-//     top = triggerRect.value?.top - tooltipRect.value?.height - offset
-//     left = triggerRect.value?.left + (triggerRect.value?.width / 2) - (tooltipRect.value?.width / 2)
-//   }
-//   return {
-//     top: top + 'px',
-//     left: left + 'px'
-//   }
-// })
-
 const tooltipPositionStyles = computed(() => {
   if (!triggerRect.value || !tooltipRect.value) {
     return {}
