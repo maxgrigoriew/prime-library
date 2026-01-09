@@ -20,8 +20,20 @@ const {
 } = defineProps<Props>()
 
 const isVisible = ref(true)
-const trigger = ref<HTMLElement | null>(null)
-const content = ref<HTMLElement | null>(null)
+
+const triggerRef = ref<HTMLElement | null>(null)
+const tooltipRef = ref<HTMLElement | null>(null)
+
+const triggerRect = ref<DOMRect | null>(null)
+const tooltipRect = ref<DOMRect | null>(null)
+
+const tooltipPositionStyles = computed(() => {
+  console.log('triggerRect.value?.top', triggerRect.value?.top)
+  return {
+    top: triggerRect.value?.top,
+    left: triggerRect.value?.left
+  }
+})
 
 // Динамические обработчики для триггера
 const on = computed(() => {
@@ -33,7 +45,6 @@ const on = computed(() => {
     events.mouseenter = handleShowTooltip
     events.mouseleave = handleHideTooltip
   }
-  console.log(events)
 
   return events
 })
@@ -45,6 +56,7 @@ const handleShowTooltip = (event: Event) => {
   if (isVisible.value) {
     return
   }
+
   isVisible.value = true
 }
 
@@ -66,19 +78,33 @@ const handleHideTooltip = () => {
   isVisible.value = false
 }
 
+const calculateTooltipPosition = () => {
+
+  if (!triggerRef.value || !tooltipRef.value) {
+    return
+  }
+
+  triggerRect.value = triggerRef.value?.getBoundingClientRect()
+  tooltipRect.value = triggerRef.value?.getBoundingClientRect()
+
+  console.log(triggerRect.value)
+  console.log(tooltipRect.value)
+}
+
 onMounted(() => {
   document.addEventListener('click', handleClickOutside)
+  calculateTooltipPosition()
 })
 </script>
 
 <template>
   <div class="tooltip-wrapper">
-    <!-- Динамические обработчики через v-on -->
-    <div class="trigger" v-on="on" ref="trigger">
+    <div class="trigger" v-on="on" ref="triggerRef">
       <slot name="trigger"></slot>
     </div>
 
-    <div v-if="isVisible" :class="placement" class="content" ref="content">
+
+    <div v-if="isVisible" :class="placement" :style="tooltipPositionStyles" class="content" ref="tooltipRef">
       <slot>
         content
       </slot>
@@ -93,18 +119,14 @@ onMounted(() => {
 }
 
 .content {
-  @apply absolute bg-grey-1 p-12 p-12 rounded-12;
-}
-
-.top {
-  @apply bottom-full left-1/2 -translate-x-1/2;
+  @apply fixed left-0 top-0 bg-grey-1 p-12 p-12 rounded-12;
 }
 
 .bottom {
   @apply top-full left-1/2 -translate-x-1/2;
 }
 
-.left{
+.left {
   @apply right-full top-1/2 -translate-y-1/2;
 }
 
