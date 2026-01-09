@@ -1,38 +1,44 @@
 <script lang="ts" setup>
 import {ref, computed, onMounted} from 'vue'
 
+type TooltipSide = 'top' | 'bottom' | 'left' | 'right'
+
 defineOptions({
   name: 'UiTestTooltip'
 })
 
 type Props = {
-  byClick?: boolean
+  byClick?: boolean,
+  offset?: number
+  placement: TooltipSide
 }
 
 const {
-  byClick = true
+  byClick = true,
+  offset = 10,
+  placement = 'top'
 } = defineProps<Props>()
 
-const isVisible = ref(false)
+const isVisible = ref(true)
 const trigger = ref<HTMLElement | null>(null)
 const content = ref<HTMLElement | null>(null)
 
 // Динамические обработчики для триггера
 const on = computed(() => {
-  const events: Record<string, any> = {}
+  const events: Record<string, object> = {}
 
   if (byClick) {
-    events.click = handleShowToolti
+    events.click = handleShowTooltip
   } else {
-    events.mouseenter = handleShowToolti
-    events.mouseleave = handleHideToolti
+    events.mouseenter = handleShowTooltip
+    events.mouseleave = handleHideTooltip
   }
   console.log(events)
 
   return events
 })
 
-const handleShowToolti = (event: Event) => {
+const handleShowTooltip = (event: Event) => {
   /* Отключаем всплытие чтобы handelClickOutlide не срабатывал и не акрывал обратно tooltip*/
   event.stopPropagation()
 
@@ -56,7 +62,7 @@ const handleClickOutside = (event: Event) => {
   isVisible.value = false
 }
 
-const handleHideToolti = () => {
+const handleHideTooltip = () => {
   isVisible.value = false
 }
 
@@ -72,10 +78,37 @@ onMounted(() => {
       <slot name="trigger"></slot>
     </div>
 
-    <div v-if="isVisible" class="content" ref="content">
+    <div v-if="isVisible" :class="placement" class="content" ref="content">
       <slot>
         content
       </slot>
     </div>
   </div>
 </template>
+
+<style lang="postcss" scoped>
+
+.tooltip-wrapper {
+  @apply relative inline-block;
+}
+
+.content {
+  @apply absolute bg-grey-1 p-12 p-12 rounded-12;
+}
+
+.top {
+  @apply bottom-full left-1/2 -translate-x-1/2;
+}
+
+.bottom {
+  @apply top-full left-1/2 -translate-x-1/2;
+}
+
+.left{
+  @apply right-full top-1/2 -translate-y-1/2;
+}
+
+.right {
+  @apply left-full top-1/2 -translate-y-1/2;
+}
+</style>
