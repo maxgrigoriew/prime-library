@@ -1,8 +1,10 @@
 <script setup lang="ts">
-import {ref, computed, onMounted, onUnmounted, watch, type StyleValue, nextTick} from 'vue'
+import {ref, computed, onMounted, onUnmounted, watch, nextTick} from 'vue'
+
+type TooltipSide = 'top' | 'bottom' | 'left' | 'right'
 
 interface Props {
-  placement?: 'top' | 'bottom' | 'left' | 'right'
+  placement?: TooltipSide
   offset?: number
   delay?: number
   showArrow?: boolean
@@ -17,14 +19,14 @@ interface Props {
 
 const props = withDefaults(defineProps<Props>(), {
   placement: 'top',
-  offset: 8,
+  offset: 18,
   delay: 0,
   showArrow: true,
-  maxWidth: '16rem',
+  maxWidth: 'max-w-[400px]',
   tabindex: 0,
-  backgroundColor: 'bg-gray-900',
-  textColor: 'text-white',
-  borderColor: '',
+  backgroundColor: 'bg-white',
+  textColor: 'text-black',
+  borderColor: 'red',
   openOnClick: false,
   closeOnClickOutside: true
 })
@@ -38,29 +40,28 @@ const tooltipRef = ref<HTMLElement | null>(null)
 const isVisible = ref(false)
 const timeoutId = ref<number | null>(null)
 const currentPlacement = ref(props.placement)
-const actualPlacement = ref(props.placement)
 
 // Вычисляемые классы для стилей
-const computedClasses = computed(() => [
+const tooltipStyleClasses = computed(() => [
   props.backgroundColor,
   props.textColor,
-  props.borderColor
+  props.borderColor,
+  props.maxWidth
 ])
 
 // Классы для позиционирования стрелки
 const arrowClasses = computed(() => {
-  const base = 'absolute w-2 h-2 bg-inherit rotate-45'
   const positionMap = {
     top: '-bottom-1 left-1/2 -translate-x-1/2',
     bottom: '-top-1 left-1/2 -translate-x-1/2',
     left: '-right-1 top-1/2 -translate-y-1/2',
     right: '-left-1 top-1/2 -translate-y-1/2'
   }
-  return `${base} ${positionMap[currentPlacement.value]}`
+  return `${positionMap[currentPlacement.value]}`
 })
 
 // Классы для позиционирования тултипа
-const positionClasses = computed(() => {
+const tooltipPositionClasses = computed(() => {
   const map = {
     top: 'bottom-full left-1/2 -translate-x-1/2 mb-2',
     bottom: 'top-full left-1/2 -translate-x-1/2 mt-2',
@@ -70,57 +71,16 @@ const positionClasses = computed(() => {
   return map[currentPlacement.value]
 })
 
-// Стили для стрелки
-const arrowStyle = computed<StyleValue>(() => {
-  const borderMap = {
-    top: { borderTop: `4px solid ${getComputedColor(props.borderColor)}` },
-    bottom: { borderBottom: `4px solid ${getComputedColor(props.borderColor)}` },
-    left: { borderLeft: `4px solid ${getComputedColor(props.borderColor)}` },
-    right: { borderRight: `4px solid ${getComputedColor(props.borderColor)}` }
-  }
-
-  if (props.borderColor && props.showArrow) {
-    return {
-      backgroundColor: 'transparent',
-      ...borderMap[currentPlacement.value]
-    }
-  }
-  return {}
-})
-
-// Стили для тултипа
-const computedStyle = computed<StyleValue>(() => ({
-  maxWidth: props.maxWidth,
-  ...(props.borderColor ? {
-    border: `1px solid ${getComputedColor(props.borderColor)}`
-  } : {})
-}))
-
-// Функция для получения цвета из классов Tailwind
-function getComputedColor(colorClass: string): string {
-  if (!colorClass) return ''
-  // Здесь можно добавить логику для преобразования классов Tailwind в реальные цвета
-  // В реальном проекте можно использовать theme() из Tailwind
-  return ''
-}
-
 // Показ тултипа
 const showTooltip = () => {
   if (timeoutId.value) {
     clearTimeout(timeoutId.value)
   }
 
-  if (props.delay > 0) {
-    timeoutId.value = setTimeout(() => {
-      isVisible.value = true
-      emit('update:visible', true)
-      nextTick(() => adjustPosition())
-    }, props.delay)
-  } else {
-    isVisible.value = true
-    emit('update:visible', true)
-    nextTick(() => adjustPosition())
-  }
+  isVisible.value = true
+  emit('update:visible', true)
+  nextTick(() => adjustPosition())
+
 }
 
 // Скрытие тултипа
@@ -156,10 +116,10 @@ const adjustPosition = () => {
   const viewportHeight = window.innerHeight
 
   let newPlacement = props.placement
-  actualPlacement.value = props.placement
 
   // Проверяем, помещается ли тултип в текущей позиции
   switch (props.placement) {
+
     case 'top':
       if (triggerRect.top - tooltipRect.height - props.offset < 0) {
         newPlacement = 'bottom'
@@ -183,7 +143,6 @@ const adjustPosition = () => {
   }
 
   currentPlacement.value = newPlacement
-  actualPlacement.value = newPlacement
 }
 
 // Обработка кликов вне тултипа
@@ -253,7 +212,6 @@ watch(isVisible, (newValue) => {
 <template>
   <div class="relative inline-block">
     <!-- Trigger element slot -->
-    {{triggerRef}}
     <div
         ref="triggerRef"
         @mouseenter="showTooltip"
@@ -263,34 +221,30 @@ watch(isVisible, (newValue) => {
         :tabindex="tabindex"
         class="inline-block"
     >
-      <slot name="trigger" />
+      <slot name="trigger"/>
     </div>
 
     <!-- Tooltip content -->
     <div
-        v-if="isVisible"
+        v-if="true"
         ref="tooltipRef"
         :class="[
-        'absolute z-50 px-3 py-2 text-sm font-medium rounded-lg shadow-lg',
-        'transition-opacity duration-200',
-        computedClasses,
-        arrowClasses,
-        positionClasses
+        tooltipStyleClasses,
+        tooltipPositionClasses
       ]"
-        :style="computedStyle"
+        class="absolute z-50 p-12 text-sm w-full font-medium rounded-lg shadow-lg transition-opacity duration-200"
         @mouseenter="handleTooltipMouseEnter"
         @mouseleave="handleTooltipMouseLeave"
     >
       <!-- Tooltip arrow -->
       <div
-          v-if="showArrow"
+          v-if="true"
           :class="arrowClasses"
-          :style="arrowStyle"
-          class="absolute w-2 h-2 bg-inherit rotate-45"
+          class="absolute w-8 h-8 bg-red rotate-45"
       />
 
       <!-- Tooltip content slot -->
-      <slot />
+      <slot/>
     </div>
   </div>
 </template>
