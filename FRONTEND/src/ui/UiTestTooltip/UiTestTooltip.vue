@@ -11,12 +11,14 @@ type Props = {
   byClick?: boolean,
   offset?: number
   placement: TooltipSide
+  width: number
 }
 
 const {
   byClick = true,
-  offset = 10,
-  placement = 'top'
+  offset = 12,
+  placement = 'top',
+  width = 400
 } = defineProps<Props>()
 
 const isVisible = ref(true)
@@ -27,11 +29,61 @@ const tooltipRef = ref<HTMLElement | null>(null)
 const triggerRect = ref<DOMRect | null>(null)
 const tooltipRect = ref<DOMRect | null>(null)
 
+// const tooltipPositionStyles = computed(() => {
+//
+//
+//   let top = 0
+//   let left = 0
+//
+//   if (placement === 'top') {
+//     top = triggerRect.value?.top - tooltipRect.value?.height - offset
+//     left = triggerRect.value?.left + (triggerRect.value?.width / 2) - (tooltipRect.value?.width / 2)
+//   }
+//   return {
+//     top: top + 'px',
+//     left: left + 'px'
+//   }
+// })
+
 const tooltipPositionStyles = computed(() => {
-  console.log('triggerRect.value?.top', triggerRect.value?.top)
+  if (!triggerRect.value || !tooltipRect.value) {
+    return {}
+  }
+
+  let top = 0
+  let left = 0
+
+  switch (placement) {
+    case 'top':
+      top = triggerRect.value.top - tooltipRect.value.height - offset
+      left = triggerRect.value.left + (triggerRect.value.width / 2) - (tooltipRect.value.width / 2)
+      break
+
+    case 'bottom':
+      top = triggerRect.value.bottom + offset
+      left = triggerRect.value.left + (triggerRect.value.width / 2) - (tooltipRect.value.width / 2)
+      break
+
+    case 'left':
+      top = triggerRect.value.top + (triggerRect.value.height / 2) - (tooltipRect.value.height / 2)
+      left = triggerRect.value.left - tooltipRect.value.width - offset
+      break
+
+    case 'right':
+      top = triggerRect.value.top + (triggerRect.value.height / 2) - (tooltipRect.value.height / 2)
+      left = triggerRect.value.right + offset
+      break
+  }
+
+  // Учитываем скролл страницы
+  const scrollX = window.scrollX
+  const scrollY = window.scrollY
+
   return {
-    top: triggerRect.value?.top,
-    left: triggerRect.value?.left
+    top: `${top + scrollY}px`,
+    left: `${left + scrollX}px`,
+    position: 'fixed', // важно для корректного позиционирования
+    zIndex: '9999',
   }
 })
 
@@ -85,7 +137,7 @@ const calculateTooltipPosition = () => {
   }
 
   triggerRect.value = triggerRef.value?.getBoundingClientRect()
-  tooltipRect.value = triggerRef.value?.getBoundingClientRect()
+  tooltipRect.value = tooltipRef.value?.getBoundingClientRect()
 
   console.log(triggerRect.value)
   console.log(tooltipRect.value)
@@ -103,7 +155,6 @@ onMounted(() => {
       <slot name="trigger"></slot>
     </div>
 
-
     <div v-if="isVisible" :class="placement" :style="tooltipPositionStyles" class="content" ref="tooltipRef">
       <slot>
         content
@@ -119,18 +170,6 @@ onMounted(() => {
 }
 
 .content {
-  @apply fixed left-0 top-0 bg-grey-1 p-12 p-12 rounded-12;
-}
-
-.bottom {
-  @apply top-full left-1/2 -translate-x-1/2;
-}
-
-.left {
-  @apply right-full top-1/2 -translate-y-1/2;
-}
-
-.right {
-  @apply left-full top-1/2 -translate-y-1/2;
+  @apply fixed left-0 top-0 bg-grey-1 p-12 p-12 rounded-12 w-[300px];
 }
 </style>
