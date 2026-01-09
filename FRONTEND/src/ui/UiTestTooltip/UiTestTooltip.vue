@@ -1,51 +1,81 @@
-<script lang="ts" setup="">
-import {ref} from 'vue'
+<script lang="ts" setup>
+import {ref, computed, onMounted} from 'vue'
 
 defineOptions({
   name: 'UiTestTooltip'
 })
 
 type Props = {
-  isHover: boolean
+  byClick?: boolean
 }
 
 const {
-  isHover = false
+  byClick = false
 } = defineProps<Props>()
 
 const isVisible = ref(false)
+const trigger = ref<HTMLElement | null>(null)
+const content = ref<HTMLElement | null>(null)
 
-const show = () => {
-  console.log('show')
-  if (isHover) {
+// Динамические обработчики для триггера
+const on = computed(() => {
+  const events: Record<string, any> = {}
 
+  if (byClick) {
+    events.click = show
+  } else {
+    events.mouseenter = show
+    events.mouseleave = hide
+  }
+  console.log(events)
+
+  return events
+})
+
+const show = (event: Event) => {
+  /* Отключаем всплытие чтобы handelClickOutlide не срабатывал и не акрывал обратно tooltip*/
+  event.stopPropagation()
+
+  if (isVisible.value) {
+    return
   }
   isVisible.value = true
+}
+
+const handleClickOutside = (event: Event) => {
+  if (!byClick || !isVisible.value) {
+    return
+  }
+
+  const target = event.target as HTMLElement
+
+  if (target.closest('.tooltip-wrapper')) {
+    return
+  }
+
+  isVisible.value = false
 }
 
 const hide = () => {
   isVisible.value = false
 }
+
+onMounted(() => {
+  document.addEventListener('click', handleClickOutside)
+})
 </script>
 
 <template>
   <div class="tooltip-wrapper">
-    <div class="trigger"
-         @click="show"
-         @mouseenter="show"
-    >
+    <!-- Динамические обработчики через v-on -->
+    <div class="trigger" v-on="on" ref="trigger">
       <slot name="trigger"></slot>
     </div>
 
-    <div v-if="isVisible" class="content">
+    <div v-if="isVisible" class="content" ref="content">
       <slot>
         content
       </slot>
     </div>
-
   </div>
 </template>
-
-<style scoped>
-
-</style>
