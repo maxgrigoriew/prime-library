@@ -1,78 +1,64 @@
 <template>
   <div class="demo-container">
-    <h1>🔍 Демо: Проблема мерцания тултипа</h1>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+<!--    <div class="demo-section">-->
+<!--      <h2>1. Проблема: Тултип мерцает</h2>-->
+<!--      <p>При показе тултип сначала появляется в (0,0), потом прыгает в нужную позицию</p>-->
 
-    <div class="controls">
-      <button @click="resetAll">Сбросить все</button>
-    </div>
+<!--      <BadTooltip label="Наведи на меня (проблема)">-->
+<!--        <template #content>-->
+<!--          Я сначала появляюсь сверху слева, потом прыгаю сюда!-->
+<!--        </template>-->
+<!--      </BadTooltip>-->
+<!--    </div>-->
+<!-- -->
 
-    <div class="demo-section">
-      <h2>1. Проблема: Тултип мерцает</h2>
-      <p>При показе тултип сначала появляется в (0,0), потом прыгает в нужную позицию</p>
-
-      <BadTooltip label="Наведи на меня (проблема)">
-        <template #content>
-          Я сначала появляюсь сверху слева, потом прыгаю сюда!
-        </template>
-      </BadTooltip>
-    </div>
-
-    <div>
-      Мой тултип
-    </div>
-
-    <ui-tooltip>
-      <template #trigger>
-        <UiButton>Кнопка</UiButton>
-      </template>
-      <div>
-        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aut ipsa non quia rerum. Accusamus adipisci
-        consectetur delectus laborum optio, quos ratione repudiandae! Animi illum inventore optio porro quam quos
-        recusandae.
-      </div>
-
-
-    </ui-tooltip>
-
-
-    <div>Тестовый тултип</div>
 
     <UiTestTooltip>
       <template #trigger>
         <UiButton>Наведи на меня</UiButton>
-        a
       </template>
+      Lorem ipsum dolor sit amet, consectetur adipisicing elit. Culpa dolore eligendi fugiat odio quaerat repellat sed tenetur ullam? Blanditiis cum eos eveniet harum, impedit ipsa magni molestias pariatur quis ullam?
     </UiTestTooltip>
-    <div class="demo-section">
-      <h2>2. Решение: visibility: hidden</h2>
-      <p>Сначала скрываем тултип, считаем позицию, потом показываем</p>
+<!--    <div class="demo-section">-->
+<!--      <h2>2. Решение: visibility: hidden</h2>-->
+<!--      <p>Сначала скрываем тултип, считаем позицию, потом показываем</p>-->
 
-      <GoodTooltip label="Наведи на меня (решение)">
-        <template #content>
-          Я сразу появляюсь в правильном месте!
-        </template>
-      </GoodTooltip>
-    </div>
+<!--      <GoodTooltip label="Наведи на меня (решение)">-->
+<!--        <template #content>-->
+<!--          Я сразу появляюсь в правильном месте!-->
+<!--        </template>-->
+<!--      </GoodTooltip>-->
+<!--    </div>-->
 
-    <div class="demo-section">
-      <h2>3. Решение: requestAnimationFrame</h2>
-      <p>Показываем в следующем кадре анимации</p>
+<!--    <div class="demo-section">-->
+<!--      <h2>3. Решение: requestAnimationFrame</h2>-->
+<!--      <p>Показываем в следующем кадре анимации</p>-->
 
-      <BetterTooltip label="Наведи на меня (requestAnimationFrame)">
-        <template #content>
-          Самый плавный вариант!
-        </template>
-      </BetterTooltip>
-    </div>
+<!--      <BetterTooltip label="Наведи на меня (requestAnimationFrame)">-->
+<!--        <template #content>-->
+<!--          Самый плавный вариант!-->
+<!--        </template>-->
+<!--      </BetterTooltip>-->
+<!--    </div>-->
 
-    <div class="debug-info">
-      <h3>Отладочная информация:</h3>
-      <div class="debug-logs">
-        <div v-for="(log, index) in logs" :key="index" :class="log.type">
-          {{ log.message }}
-        </div>
-      </div>
-    </div>
+<!--    <div class="debug-info">-->
+<!--      <h3>Отладочная информация:</h3>-->
+<!--      <div class="debug-logs">-->
+<!--        <div v-for="(log, index) in logs" :key="index" :class="log.type">-->
+<!--          {{ log.message }}-->
+<!--        </div>-->
+<!--      </div>-->
+<!--    </div>-->
   </div>
 </template>
 
@@ -107,7 +93,6 @@ const resetAll = () => {
 
 <style>
 .demo-container {
-  padding: 20px;
   max-width: 800px;
   margin: 0 auto;
   font-family: system-ui, -apple-system, sans-serif;

@@ -26,6 +26,9 @@ const isVisible = ref(true)
 const triggerRef = ref<HTMLElement | null>(null)
 const tooltipRef = ref<HTMLElement | null>(null)
 
+const currentPlacement = ref(placement)
+
+
 const triggerRect = ref<DOMRect | null>(null)
 const tooltipRect = ref<DOMRect | null>(null)
 
@@ -37,8 +40,11 @@ const tooltipPositionStyles = computed(() => {
   let top = 0
   let left = 0
 
-  switch (placement) {
+  switch (currentPlacement.value) {
     case 'top':
+      if (triggerRect.value.top <= tooltipRect.value.height + offset ) {
+        currentPlacement.value = 'bottom'
+      }
       top = triggerRect.value.top - tooltipRect.value.height - offset
       left = triggerRect.value.left + (triggerRect.value.width / 2) - (tooltipRect.value.width / 2)
       break
@@ -139,7 +145,7 @@ onMounted(() => {
       <slot name="trigger"></slot>
     </div>
 
-    <div v-if="isVisible" :class="placement" :style="tooltipPositionStyles" class="content" ref="tooltipRef">
+    <div v-if="isVisible" :class="currentPlacement" :style="tooltipPositionStyles" class="content" ref="tooltipRef">
       <slot>
         content
       </slot>

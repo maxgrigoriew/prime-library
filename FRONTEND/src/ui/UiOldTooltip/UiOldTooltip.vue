@@ -24,7 +24,7 @@
 
 <script>
 import Timer from './Timer.js';
-import { isEmptyObject } from './isEmptyObject.ts';
+import { isEmptyObject } from '../../shared/objects/isEmptyObject.ts';
 import { TooltipPosition } from './TooltipPosition.js';
 
 export default {
