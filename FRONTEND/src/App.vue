@@ -23,7 +23,7 @@
 <!-- -->
 
 
-    <UiTestTooltip>
+    <UiTestTooltip :by-click="false">
       <template #trigger>
         <UiButton>Наведи на меня</UiButton>
       </template>

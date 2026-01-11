@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import {ref, computed, onMounted} from 'vue'
+import {ref, computed, onMounted, watch, nextTick} from 'vue'
 
 type TooltipSide = 'top' | 'bottom' | 'left' | 'right'
 
@@ -15,24 +15,24 @@ type Props = {
 }
 
 const {
-  byClick = true,
+  byClick = false,
   offset = 12,
   placement = 'bottom',
   width = 400
 } = defineProps<Props>()
 
-const isVisible = ref(true)
+const isVisible = ref(false)
 
 const triggerRef = ref<HTMLElement | null>(null)
 const tooltipRef = ref<HTMLElement | null>(null)
 
 const currentPlacement = ref(placement)
 
-
 const triggerRect = ref<DOMRect | null>(null)
 const tooltipRect = ref<DOMRect | null>(null)
 
 const tooltipPositionStyles = computed(() => {
+  console.log('position style')
   if (!triggerRect.value || !tooltipRect.value) {
     return {}
   }
@@ -40,7 +40,6 @@ const tooltipPositionStyles = computed(() => {
   let top = 0
   let left = 0
 
-  console.log('computed')
   switch (currentPlacement.value) {
     case 'top':
       // if (triggerRect.value.top <= tooltipRect.value.height + offset ) {
@@ -54,7 +53,6 @@ const tooltipPositionStyles = computed(() => {
       top = triggerRect.value.bottom + offset
       left = triggerRect.value.left + (triggerRect.value.width / 2) - (tooltipRect.value.width / 2)
 
-      console.log('top', top)
       break
 
     case 'left':
@@ -80,6 +78,7 @@ const on = computed(() => {
   const events: Record<string, object> = {}
 
   if (byClick) {
+    console.log(123)
     events.click = handleShowTooltip
   } else {
     events.mouseenter = handleShowTooltip
@@ -119,13 +118,26 @@ const handleHideTooltip = () => {
 }
 
 const calculateTooltipPosition = () => {
+  console.log('calculate')
   if (!triggerRef.value || !tooltipRef.value) {
     return
   }
 
   triggerRect.value = triggerRef.value?.getBoundingClientRect()
   tooltipRect.value = tooltipRef.value?.getBoundingClientRect()
+
+
 }
+
+watch(isVisible, async () => {
+  if (!isVisible.value) {
+    return
+  }
+
+  await nextTick()
+  calculateTooltipPosition()
+
+})
 
 onMounted(() => {
   calculateTooltipPosition()
