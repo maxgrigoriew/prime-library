@@ -17,7 +17,7 @@ type Props = {
 const {
   byClick = true,
   offset = 12,
-  placement = 'top',
+  placement = 'bottom',
   width = 400
 } = defineProps<Props>()
 
@@ -40,11 +40,12 @@ const tooltipPositionStyles = computed(() => {
   let top = 0
   let left = 0
 
+  console.log('computed')
   switch (currentPlacement.value) {
     case 'top':
-      if (triggerRect.value.top <= tooltipRect.value.height + offset ) {
-        currentPlacement.value = 'bottom'
-      }
+      // if (triggerRect.value.top <= tooltipRect.value.height + offset ) {
+      //   currentPlacement.value = 'bottom'
+      // }
       top = triggerRect.value.top - tooltipRect.value.height - offset
       left = triggerRect.value.left + (triggerRect.value.width / 2) - (tooltipRect.value.width / 2)
       break
@@ -52,6 +53,8 @@ const tooltipPositionStyles = computed(() => {
     case 'bottom':
       top = triggerRect.value.bottom + offset
       left = triggerRect.value.left + (triggerRect.value.width / 2) - (tooltipRect.value.width / 2)
+
+      console.log('top', top)
       break
 
     case 'left':
@@ -65,17 +68,12 @@ const tooltipPositionStyles = computed(() => {
       break
   }
 
-  // Учитываем скролл страницы
-  const scrollX = window.scrollX
-  const scrollY = window.scrollY
-
   return {
-    top: `${top + scrollY}px`,
-    left: `${left + scrollX}px`,
-    position: 'fixed', // важно для корректного позиционирования
-    zIndex: '9999',
+    top: `${top}px`,
+    left: `${left}px`,
   }
 })
+
 
 // Динамические обработчики для триггера
 const on = computed(() => {
@@ -121,21 +119,20 @@ const handleHideTooltip = () => {
 }
 
 const calculateTooltipPosition = () => {
-
   if (!triggerRef.value || !tooltipRef.value) {
     return
   }
 
   triggerRect.value = triggerRef.value?.getBoundingClientRect()
   tooltipRect.value = tooltipRef.value?.getBoundingClientRect()
-
-  console.log(triggerRect.value)
-  console.log(tooltipRect.value)
 }
 
 onMounted(() => {
-  document.addEventListener('click', handleClickOutside)
   calculateTooltipPosition()
+
+  document.addEventListener('click', handleClickOutside)
+  window.addEventListener('resize', calculateTooltipPosition)
+  window.addEventListener('scroll', calculateTooltipPosition)
 })
 </script>
 
@@ -160,6 +157,6 @@ onMounted(() => {
 }
 
 .content {
-  @apply fixed left-0 top-0 bg-grey-1 p-12 p-12 rounded-12 w-[300px];
+  @apply fixed left-0 top-0 bg-grey-1 p-12 rounded-12 w-[300px];
 }
 </style>

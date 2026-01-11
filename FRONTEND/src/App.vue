@@ -150,4 +150,8 @@ const resetAll = () => {
 .debug-logs .reset {
   background: #8b5cf6;
 }
+
+body {
+  @apply h-[3000px];
+}
 </style>
