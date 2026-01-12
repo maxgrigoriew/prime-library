@@ -55,7 +55,7 @@ const updateNewTodoProxy = computed<string>({
       </div>
     </div>
 
-    <div class="h-1 bg-grey-2 mb-4"></div>
+    <div class="h-1 bg-gray-2 mb-4"></div>
     <div class="flex gap-12 items-center justify-between">
       <UiInput
           v-model="updateNewTodoProxy"

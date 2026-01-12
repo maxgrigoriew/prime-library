@@ -52,9 +52,9 @@ const togglePasswordVisible = () => {
           v-model="modelValue"
           :class="inputClasses"
           :placeholder="placeholder"
-          class="w-100% rounded-[4px] px-8 py-4 border border-grey-3"
+          class="w-100% rounded-[4px] px-8 py-4 border border-gray-3"
       >
-      <div v-if="!visible" class="absolute absolut right-8 top-1/2 -translate-y-1/2 cursor-pointer bg-grey-1"
+      <div v-if="!visible" class="absolute absolut right-8 top-1/2 -translate-y-1/2 cursor-pointer bg-gray-1"
         @click="togglePasswordVisible"
       >
         <component :is="currentIcon" />
