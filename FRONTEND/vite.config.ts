@@ -6,7 +6,6 @@ import {fileURLToPath} from 'node:url';
 import {storybookTest} from '@storybook/addon-vitest/vitest-plugin';
 import {playwright} from '@vitest/browser-playwright';
 import svgLoader from 'vite-svg-loader'
-import tsconfigPaths from 'vite-tsconfig-paths'
 
 const dirname = typeof __dirname !== 'undefined' ? __dirname : path.dirname(fileURLToPath(import.meta.url));
 
@@ -14,7 +13,7 @@ export default defineConfig({
     plugins: [
         vue(),
         svgLoader({defaultImport: 'component'}),
-        tsconfigPaths()
+
     ],
     resolve: {
         alias: {
