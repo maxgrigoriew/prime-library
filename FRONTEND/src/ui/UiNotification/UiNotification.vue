@@ -1,11 +1,12 @@
 <script lang="ts" setup="">
 import {computed, ref} from 'vue'
 
-import IconInfo from '@/assets/icons/tasks.svg?component';
-import IconError from '@/assets/icons/home.svg?component';
+import IconInfo from '@/assets/icons/info.svg?component';
+import IconError from '@/assets/icons/help.svg?component';
 
 defineOptions({
   name: 'UiNotification',
+  inheritAttrs: false,
   components: {
     IconError,
     IconInfo
@@ -20,27 +21,31 @@ type Props = {
   icon: Icon
   type: Type
   isCollapsed?: boolean
-  sticky: Sticky
+  sticky?: Sticky
 }
 
 const {
   type = 'info',
   icon = 'error',
   isCollapsed = false,
-  sticky = '',
+  sticky = 'top',
 } = defineProps<Props>()
-
-const emit = defineEmits<{}>()
 
 const THEME_CLASS = {
   'info': 'blue-2',
   'error': 'red-100',
 }
 
+const ICON_CLASS = {
+  'info': 'IconInfo',
+  'error': 'IconError',
+}
+
 const isOpened = ref(false)
 
-const currentIcon = computed(() => 'IconInfo')
+const currentIcon = computed(() => ICON_CLASS[icon])
 const currentTheme = computed(() => `bg-${THEME_CLASS[type]}`)
+const stickyClass = computed(() => `sticky-${sticky}`)
 
 
 const handleChangeOpened = () => {
@@ -50,7 +55,7 @@ const handleChangeOpened = () => {
 </script>
 
 <template>
-  <div class="notification" :class="{open: isOpened}">
+  <div class="notification" :class="[{open: isOpened}, stickyClass]" >
     <div :class="currentTheme" class="main flex gap-12 text-white p-12">
       <div class="icon">
         <slot name="icon">
