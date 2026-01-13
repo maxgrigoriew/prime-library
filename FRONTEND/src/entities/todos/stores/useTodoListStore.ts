@@ -1,12 +1,14 @@
 import type {Todo} from '../types/types.ts'
 import {createGlobalState} from "@vueuse/core";
 import {computed, type ComputedRef, reactive} from "vue";
-import {DataState} from "../../../shared/dataState";
+import {DataState} from "@/shared/dataState";
 
 export type TodoReturnShape = {
     todoState: TodoState
     isLoadingTodoList: ComputedRef<boolean>
-    setTodoState: (todo: DataState) => void
+    isLoadingMarkingTodo: ComputedRef<boolean>
+    setMarkingTodoState: (todo: DataState) => void
+    setSendingTodoState: (todo: DataState) => void
     setTodos: (todos: Todo[]) => void
     setTodo: (todo: string) => void
     removeTodoById: (id: number) => void
@@ -16,22 +18,29 @@ export type TodoReturnShape = {
 type TodoState = {
     list: Todo[]
     newTodo: string
-    state: DataState
+    markingTodoState: DataState
+    sendingTodoState: DataState
 }
 
 const getDefaultState = (): TodoState => ({
     list:[],
     newTodo: '',
-    state: DataState.Init
+    markingTodoState: DataState.Init,
+    sendingTodoState: DataState.Init
 })
 
 export const useTodoListStore = createGlobalState((): TodoReturnShape => {
     const todoState = reactive(getDefaultState())
 
-    const isLoadingTodoList = computed(() => todoState.state === DataState.Loading)
+    const isLoadingTodoList = computed(() => todoState.sendingTodoState === DataState.Loading)
+    const isLoadingMarkingTodo = computed(() => todoState.markingTodoState === DataState.Loading)
 
-    const setTodoState = (state: DataState): void => {
-        todoState.state = state
+    const setMarkingTodoState = (state: DataState): void => {
+        todoState.markingTodoState = state
+    }
+
+    const setSendingTodoState = (state: DataState): void => {
+        todoState.markingTodoState = state
     }
 
     const setTodos = (todos: Todo[]) => {
@@ -63,8 +72,10 @@ export const useTodoListStore = createGlobalState((): TodoReturnShape => {
     return {
         todoState,
         isLoadingTodoList,
+        isLoadingMarkingTodo,
 
-        setTodoState,
+        setMarkingTodoState,
+        setSendingTodoState,
         setTodo,
         setTodos,
         removeTodoById,

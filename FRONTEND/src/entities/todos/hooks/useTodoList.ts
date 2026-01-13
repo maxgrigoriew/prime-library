@@ -4,8 +4,8 @@ import {TODO_API} from "../api";
 import {throwErrorApi} from "../../../shared/api/throwErrorApi.ts";
 import {DataState} from "../../../shared/dataState";
 
-const { todoState,isLoadingTodoList, setTodoState, setTodos, removeTodoById, markTodoById, setTodo } = useTodoListStore()
-type ReturnShape = Pick<TodoReturnShape, 'todoState' | 'isLoadingTodoList'> & {
+const { todoState,isLoadingTodoList, isLoadingMarkingTodo, setMarkingTodoState, setSendingTodoState, setTodos, removeTodoById, markTodoById, setTodo } = useTodoListStore()
+type ReturnShape = Pick<TodoReturnShape, 'todoState' | 'isLoadingTodoList' | 'isLoadingMarkingTodo'> & {
     getTodoList: () => Promise<void>
     removeTodo: (id: number) => Promise<void>
     markTodo: (id: number) => Promise<void>
@@ -15,14 +15,18 @@ type ReturnShape = Pick<TodoReturnShape, 'todoState' | 'isLoadingTodoList'> & {
 export const useTodoList = (): ReturnShape => {
     const getTodoList = async() => {
         try {
-            setTodoState(DataState.Loading)
+            setMarkingTodoState(DataState.Loading)
             const {result} = await TODO_API.getTodos()
 
+            await new Promise((resolve) => {
+                setTimeout(() => resolve(result), 1000)
+            })
+
             setTodos(result)
-            setTodoState(DataState.Success)
+            setMarkingTodoState(DataState.Success)
         } catch(error) {
             console.log('error', error)
-            setTodoState(DataState.Failed)
+            setMarkingTodoState(DataState.Failed)
         } finally {
         }
     }
@@ -49,12 +53,18 @@ export const useTodoList = (): ReturnShape => {
                 done: !findTodo.done
             }
 
+            setSendingTodoState(DataState.Loading)
             const response = await TODO_API.markTodo(reqt)
+            await new Promise((resolve) => {
+                setTimeout(() => resolve(response), 1000)
+            })
 
             throwErrorApi(response)
             markTodoById(findTodo.id)
+            setSendingTodoState(DataState.Success)
         } catch (e) {
             console.log('error:', e)
+            setSendingTodoState(DataState.Failed)
         }
     }
 
@@ -80,6 +90,7 @@ export const useTodoList = (): ReturnShape => {
     return {
         todoState,
         isLoadingTodoList,
+        isLoadingMarkingTodo,
 
         getTodoList,
         removeTodo,

@@ -14,10 +14,11 @@ defineOptions({
 type Props = {
   todoList: Todo[]
   modelValue: string
-  loading: boolean
+  isLoadingTodoMarking: boolean
+  isLoadingTodoList: boolean
 }
 
-const {todoList, modelValue, loading} = defineProps<Props>()
+const {todoList, modelValue, isLoadingTodoMarking, isLoadingTodoList} = defineProps<Props>()
 
 const emit = defineEmits<{
   'update:modelValue': [string]
@@ -44,7 +45,7 @@ const updateNewTodoProxy = computed<string>({
     <div class="flex flex-col overflow-y-auto">
       <div v-for="todo in todoList" :key="todo.id">
         <div class="group flex items-center py-12 gap-12 cursor-pointer rounded-lg transition-colors duration-200">
-          <input type="checkbox" class="cursor-pointer" :disabled="loading" :checked="todo.done" @change="emit('mark', todo.id)">
+          <input type="checkbox" class="cursor-pointer" :disabled="isLoadingTodoMarking" :checked="todo.done" @change="emit('mark', todo.id)">
           <div class="flex-1">{{ todo.text }}</div>
 
           <IconTrash
@@ -64,7 +65,7 @@ const updateNewTodoProxy = computed<string>({
           @keydown.enter.prevent.exact="emit('send')"
       />
       <UiButton
-          :disabled="!updateNewTodoProxy || loading"
+          :disabled="!updateNewTodoProxy || isLoadingTodoList"
           class="flex justify-center items-center w-40 h-40 border flex-none p-4 rounded-full cursor-pointer"
           @click="emit('send')">
         >

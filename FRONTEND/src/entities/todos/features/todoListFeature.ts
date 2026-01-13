@@ -7,13 +7,14 @@ const {showConfirm} = useConfirm()
 const {
     todoState,
     isLoadingTodoList,
+    isLoadingMarkingTodo,
     getTodoList,
     removeTodo,
     markTodo,
     sendNewTodo
 } = useTodoList()
 
-type ReturnShape = Pick<TodoReturnShape, 'todoState' | 'isLoadingTodoList'> & {
+type ReturnShape = Pick<TodoReturnShape, 'todoState' | 'isLoadingTodoList' | 'isLoadingMarkingTodo'> & {
     loadTodoList: () => Promise<void>
     handleRemoveTodo: (id: number) => Promise<void>
     handleMarkTodo: (id: number) => Promise<void>
@@ -72,6 +73,7 @@ export const todoListFeature = (): ReturnShape => {
     return {
         todoState,
         isLoadingTodoList,
+        isLoadingMarkingTodo,
 
         loadTodoList,
         handleRemoveTodo,

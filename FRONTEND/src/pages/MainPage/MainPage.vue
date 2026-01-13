@@ -18,6 +18,7 @@ const {
 const {
   todoState,
   isLoadingTodoList,
+  isLoadingMarkingTodo,
   loadTodoList,
   handleRemoveTodo,
   handleMarkTodo,
@@ -47,11 +48,22 @@ onMounted(async () => {
           <UiButton>Кнопка</UiButton>
         </template>
         <div>
-          Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aut ipsa non quia rerum. Accusamus adipisci consectetur delectus laborum optio, quos ratione repudiandae! Animi illum inventore optio porro quam quos recusandae.
+          Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aut ipsa non quia rerum. Accusamus adipisci
+          consectetur delectus laborum optio, quos ratione repudiandae! Animi illum inventore optio porro quam quos
+          recusandae.
         </div>
       </ui-tooltip>
     </div>
-    <TodoList v-model="todoState.newTodo"  :todo-list="todoState.list" :loading="isLoadingTodoList" @mark="handleMarkTodo" @remove="handleRemoveTodo" @send="handleSendNewTodo" class="todos shadow-custom bg-white rounded-[12px] p-[12px]" />
+    <TodoList
+        v-model="todoState.newTodo"
+        :todo-list="todoState.list"
+        :isLoadingTodoLisr="isLoadingTodoList"
+        :isLoadingTodoMarking="isLoadingMarkingTodo"
+        @mark="handleMarkTodo"
+        @remove="handleRemoveTodo"
+        @send="handleSendNewTodo"
+        class="todos shadow-custom bg-white rounded-[12px] p-[12px]"
+    />
     <div class="calendar shadow-custom  bg-gray-3 rounded-[12px] p-[12px]">calendar</div>
 
   </div>
