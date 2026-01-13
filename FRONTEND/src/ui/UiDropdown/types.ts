@@ -4,4 +4,5 @@ export type DropdownOption = {
   disabled?: boolean
 }
 
-export type DropdownSize = 'sm' | 'md' | 'lg'
+export const dropDownSizes = ['sm', 'md', 'lg'] as const
+export type DropdownSize = typeof dropDownSizes[number]
