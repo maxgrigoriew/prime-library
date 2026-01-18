@@ -21,7 +21,7 @@ const {
 } = defineProps<Props>()
 
 const buttonTypeClass = computed(() => BUTTON_CLASSES_BY_TYPE[type])
-const buttonDisabledClass = computed(() => disabled ? 'bg-gray-3 cursor-default' : '')
+const buttonDisabledClass = computed(() => disabled ? 'bg-grey-3 cursor-default' : '')
 </script>
 
 <template>

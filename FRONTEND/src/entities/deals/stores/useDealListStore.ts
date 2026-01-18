@@ -17,6 +17,7 @@ export const useDealListStore = createGlobalState((): DealListStoreReturnShape =
     const dealListData: DealListData = reactive<DealListData>(getDefaultDataList())
     const setDealListData = (list: Deal[]): void => {
         dealListData.list = list
+        console.log('dealListData', dealListData)
         const res = dealListData.list[0]
         console.log('res', res)
     }

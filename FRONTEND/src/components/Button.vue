@@ -4,7 +4,7 @@
       'px-4 py-2 rounded font-medium transition-colors duration-200',
       {
         'bg-blue-600 hover:bg-blue-700 text-white': variant === 'primary',
-        'bg-gray-200 hover:bg-gray-300 text-gray-800': variant === 'secondary',
+        'bg-grey-200 hover:bg-grey-300 text-grey-800': variant === 'secondary',
         'bg-red-600 hover:bg-red-700 text-white': variant === 'danger',
         'bg-green-600 hover:bg-green-700 text-white': variant === 'success',
         'text-blue-600 hover:bg-blue-100': variant === 'text',

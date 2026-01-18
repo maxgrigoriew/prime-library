@@ -14,7 +14,7 @@ const {userLogin, userPassword ,loadMyProfile} = authFt()
 </script>
 
 <template>
-  <div class="h-1 bg-gray-2"></div>
+  <div class="h-1 bg-grey-2"></div>
 
   <div class="px-12 m-auto flex flex-col gap-20">
     <div class="px-32 text-2xl font-bold ">Вход на сайт</div>
@@ -27,7 +27,7 @@ const {userLogin, userPassword ,loadMyProfile} = authFt()
     <UiInput title="Пароль" :is-password-mode ="false" v-model="userPassword" />
     <UiButton type="primary" class="ml-auto w-100%" @click="loadMyProfile">Войти</UiButton>
   </div>
-  <div class="h-1 bg-gray-2 mt-auto"></div>
+  <div class="h-1 bg-grey-2 mt-auto"></div>
 </template>
 
 <style scoped>

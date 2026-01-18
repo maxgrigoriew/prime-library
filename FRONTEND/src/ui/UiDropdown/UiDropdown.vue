@@ -56,13 +56,13 @@ onUnmounted(() => {
         type="button"
         :disabled="isDisabled"
         :class="[
-        'w-full flex items-center justify-between rounded-[4px] border border-gray-3 bg-white',
+        'w-full flex items-center justify-between rounded-[4px] border border-grey-3 bg-white',
         sizeClasses,
         { 'ring-2 ring-blue-5': isOpen }
       ]"
         @click="toggleDropdown"
     >
-      <span :class="{ 'text-gray-4': !selectedOption, 'text-gray-8': selectedOption }">
+      <span :class="{ 'text-grey-4': !selectedOption, 'text-grey-8': selectedOption }">
         {{ selectedOption ? selectedOption.label : (placeholder || 'Select...') }}
       </span>
       <i class="pi pi-chevron-down"></i>
@@ -79,15 +79,15 @@ onUnmounted(() => {
       <div
           v-if="isOpen"
           :class="position"
-          class="content z-10 mt-2 w-full rounded-md bg-white shadow-lg max-h-60 overflow-auto border border-gray-2"
+          class="content z-10 mt-2 w-full rounded-md bg-white shadow-lg max-h-60 overflow-auto border border-grey-2"
       >
         <!-- Filter input -->
-        <div v-if="isFilter" class="p-2 border-b border-gray-2">
+        <div v-if="isFilter" class="p-2 border-b border-grey-2">
           <input
               ref="filterInputRef"
               v-model="filterValue"
               type="text"
-              class="w-full py-4 px-6 border border-gray-3 rounded-4 focus:outline-none focus:red focus:ring-blue-5"
+              class="w-full py-4 px-6 border border-grey-3 rounded-4 focus:outline-none focus:red focus:ring-blue-5"
               placeholder="Search..."
           />
         </div>
@@ -96,9 +96,9 @@ onUnmounted(() => {
           <li
               v-for="option in filteredOptions"
               :key="option.value"
-              class="px-4 py-2 cursor-pointer hover:bg-gray-1"
+              class="px-4 py-2 cursor-pointer hover:bg-grey-1"
               :class="[
-              { 'text-gray-4': option.disabled, 'bg-gray-2': option.value === selectedValue && !option.disabled }
+              { 'text-grey-4': option.disabled, 'bg-grey-2': option.value === selectedValue && !option.disabled }
             ]"
               @click="selectOption(option)"
           >

@@ -8,7 +8,7 @@ defineOptions({
 
 <template>
   <div class="flex">
-    <div class="h-100vh flex-grow flex flex-col bg-gray-2 h-screen">
+    <div class="h-100vh flex-grow flex flex-col bg-grey-2 h-screen">
     </div>
 
     <div class="w-[400px] py-52 flex flex-col">

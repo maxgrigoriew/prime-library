@@ -47,10 +47,10 @@ const sizeClasses = computed(() => {
     <!-- Header Section -->
     <div v-if="$slots.header || title" :class="['pb-4', headerClass]">
       <slot name="header">
-        <h3 v-if="title" class="text-lg font-semibold text-gray-5">
+        <h3 v-if="title" class="text-lg font-semibold text-grey-5">
           {{ title }}
         </h3>
-        <p v-if="subtitle" class="text-sm text-gray-4 mt-1">
+        <p v-if="subtitle" class="text-sm text-grey-4 mt-1">
           {{ subtitle }}
         </p>
       </slot>

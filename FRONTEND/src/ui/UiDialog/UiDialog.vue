@@ -124,8 +124,8 @@ onUnmounted(() => {
           @click.stop
         >
           <!-- Header -->
-          <div v-if="showHeader" class="flex items-center justify-between p-6 border-b border-gray-2">
-            <div class="font-semibold text-lg text-gray-8">
+          <div v-if="showHeader" class="flex items-center justify-between p-6 border-b border-grey-2">
+            <div class="font-semibold text-lg text-grey-8">
               <slot name="header">
                 <span>{{ title }}</span>
               </slot>
@@ -133,7 +133,7 @@ onUnmounted(() => {
             <button 
               v-if="closable" 
               type="button" 
-              class="text-gray-4 hover:text-gray-6 transition-colors duration-200"
+              class="text-grey-4 hover:text-grey-6 transition-colors duration-200"
               @click="closeDialog"
             >
               <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -148,7 +148,7 @@ onUnmounted(() => {
           </div>
           
           <!-- Footer -->
-          <div v-if="$slots.footer" class="p-6 border-t border-gray-2">
+          <div v-if="$slots.footer" class="p-6 border-t border-grey-2">
             <slot name="footer" />
           </div>
         </div>

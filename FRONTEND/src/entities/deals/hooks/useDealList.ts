@@ -11,7 +11,7 @@ export const useDealList = (): UseDealListReturnShape => {
     const getDealList = async () => {
         try {
             setDealListState(DataState.Loading)
-            const data = await DEAL_API.getDeals(
+            const { data } = await DEAL_API.getDeals(
                 {
                     "sortColumn": "",
                     "sortAscent": true,
@@ -39,8 +39,8 @@ export const useDealList = (): UseDealListReturnShape => {
                         "period": null
                     }
                 })
-            setDealListData(data)
-            console.log('data', data)
+            console.log('result', data.result.result)
+            setDealListData(data.result.result)
             setDealListState(DataState.Success)
         } catch (error) {
             console.log(error)

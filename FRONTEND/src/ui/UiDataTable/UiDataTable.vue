@@ -134,23 +134,23 @@ const onPageChange = (page: number) => {
 </script>
 
 <template>
-  <div class="overflow-x-auto rounded-lg border border-gray-2">
-    <table class="min-w-full divide-y divide-gray-2">
+  <div class="overflow-x-auto rounded-lg border border-grey-2">
+    <table class="min-w-full divide-y divide-grey-2">
       <!-- Table Header -->
-      <thead class="bg-gray-50">
+      <thead class="bg-grey-50">
         <tr>
           <th 
             v-for="col in columns" 
             :key="col.field"
             :class="[
-              'px-6 py-3 text-left text-xs font-medium text-gray-5 uppercase tracking-wider',
+              'px-6 py-3 text-left text-xs font-medium text-grey-5 uppercase tracking-wider',
               col.class
             ]"
             :style="col.style"
           >
             <div 
               v-if="col.sortable" 
-              class="flex items-center cursor-pointer hover:text-gray-7"
+              class="flex items-center cursor-pointer hover:text-grey-7"
               @click="onSort(col)"
             >
               <span>{{ col.header }}</span>
@@ -189,13 +189,13 @@ const onPageChange = (page: number) => {
       </thead>
 
       <!-- Table Body -->
-      <tbody class="bg-white divide-y divide-gray-2">
+      <tbody class="bg-white divide-y divide-grey-2">
         <tr 
           v-for="(item, index) in paginatedData" 
           :key="index"
           :class="[
-            'hover:bg-gray-50',
-            { 'bg-gray-50': stripedRows && index % 2 === 0, 'cursor-pointer': selectionMode },
+            'hover:bg-grey-50',
+            { 'bg-grey-50': stripedRows && index % 2 === 0, 'cursor-pointer': selectionMode },
             isSelected(item) ? 'bg-blue-50' : ''
           ]"
           @click="selectionMode ? toggleSelection(item) : null"
@@ -203,7 +203,7 @@ const onPageChange = (page: number) => {
           <td 
             v-for="col in columns" 
             :key="col.field"
-            :class="['px-6 py-4 whitespace-nowrap text-sm text-gray-7', col.class]"
+            :class="['px-6 py-4 whitespace-nowrap text-sm text-grey-7', col.class]"
             :style="col.style"
           >
             <slot :name="col.field" :value="getNestedValue(item, col.field)" :data="item">
@@ -215,21 +215,21 @@ const onPageChange = (page: number) => {
     </table>
 
     <!-- Paginator -->
-    <div v-if="paginator" class="flex items-center justify-between border-t border-gray-2 px-4 py-3 bg-white">
-      <div class="text-sm text-gray-7">
+    <div v-if="paginator" class="flex items-center justify-between border-t border-grey-2 px-4 py-3 bg-white">
+      <div class="text-sm text-grey-7">
         Showing {{ firstRowIndex + 1 }} to {{ Math.min(firstRowIndex + rows, value.length) }} of {{ value.length }} results
       </div>
       <div class="flex space-x-2">
         <button 
           :disabled="firstRowIndex === 0"
-          class="px-3 py-1 rounded border border-gray-3 text-sm disabled:opacity-50 disabled:cursor-not-allowed"
+          class="px-3 py-1 rounded border border-grey-3 text-sm disabled:opacity-50 disabled:cursor-not-allowed"
           @click="onPageChange(Math.max(1, Math.floor(firstRowIndex / rows)))"
         >
           Previous
         </button>
         <button 
           :disabled="firstRowIndex + rows >= value.length"
-          class="px-3 py-1 rounded border border-gray-3 text-sm disabled:opacity-50 disabled:cursor-not-allowed"
+          class="px-3 py-1 rounded border border-grey-3 text-sm disabled:opacity-50 disabled:cursor-not-allowed"
           @click="onPageChange(Math.min(totalPages, Math.floor(firstRowIndex / rows) + 2))"
         >
           Next
