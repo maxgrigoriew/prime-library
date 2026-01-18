@@ -25,17 +25,6 @@ defineOptions({
         <AppHeaderLink to="/deals">
           <IconDeals />
         </AppHeaderLink>
-        <AppHeaderLink to="/login">
-         login
-        </AppHeaderLink>
-
-        <UiButton @click="logout">
-          logout
-        </UiButton>
-        <AppHeaderLink to="/login">
-
-         logout
-        </AppHeaderLink>
       </ul>
     </div>
   </div>

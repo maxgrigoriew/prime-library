@@ -5,11 +5,13 @@ import {taskPage} from "../pages/TaskPage";
 import {dealPage} from "../pages/DealPage";
 import {loginPage} from "../pages/LoginPage";
 import {authFt} from "../entities/auth/features/authFf.ts";
+import {dealListPage} from "@/pages/DealListPage";
 
 const routes: RouteForAdd[] = [
     loginPage,
     mainPage,
     taskPage,
+    dealListPage,
     dealPage
 ]
 
