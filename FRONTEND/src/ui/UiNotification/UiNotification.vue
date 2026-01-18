@@ -1,16 +1,9 @@
 <script lang="ts" setup="">
 import {computed, ref} from 'vue'
 
-import IconInfo from '@/assets/icons/info.svg?component';
-import IconError from '@/assets/icons/help.svg?component';
-
 defineOptions({
   name: 'UiNotification',
   inheritAttrs: false,
-  components: {
-    IconError,
-    IconInfo
-  }
 })
 
 type Icon = 'info' | 'error'
@@ -37,13 +30,13 @@ const THEME_CLASS = {
 }
 
 const ICON_CLASS = {
-  'info': 'IconInfo',
-  'error': 'IconError',
+  'info': 'pi-info-circle',
+  'error': 'pi-exclamation-triangle',
 }
 
 const isOpened = ref(false)
 
-const currentIcon = computed(() => ICON_CLASS[icon])
+const currentIconClass = computed(() => ICON_CLASS[icon])
 const currentTheme = computed(() => `bg-${THEME_CLASS[type]}`)
 const stickyClass = computed(() => `sticky-${sticky}`)
 
@@ -59,7 +52,7 @@ const handleChangeOpened = () => {
     <div :class="currentTheme" class="main flex gap-12 text-white p-12">
       <div class="icon">
         <slot name="icon">
-          <component :is="currentIcon"/>
+          <i :class="currentIconClass"/>
         </slot>
       </div>
       <div class="contend">

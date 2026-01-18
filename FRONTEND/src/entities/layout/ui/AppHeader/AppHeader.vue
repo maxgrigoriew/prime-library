@@ -1,11 +1,6 @@
 <script setup lang="ts">
 
-import IconTasks from '@/assets/icons/tasks.svg?component';
-import IconHome from '@/assets/icons/home.svg?component';
-import IconDeals from '@/assets/icons/deals.svg?component';
 import AppHeaderLink from "./AppHeaderLink/AppHeaderLilnk.vue";
-import {logout} from "@/entities/auth/api/methods/logout.ts";
-import UiButton from "@/ui/UiButton/UiButton.vue";
 
 defineOptions({
   name: 'AppHeader'
@@ -13,17 +8,18 @@ defineOptions({
 </script>
 
 <template>
-  <div class="flex flex-col justify-between p-4 pt-12 rounded-[8px] fixed left-20 top-20 bottom-20 w-[60px] bg-gray-400">
+  <div
+      class="flex flex-col justify-between p-4 pt-12 rounded-[8px] fixed left-20 top-20 bottom-20 w-[60px] bg-gray-400">
     <div class="header_top">
       <ul class="flex flex-col justify-center items-center gap-12">
         <AppHeaderLink to="/">
-          <IconHome />
+          <i class="pi pi-home"></i>
         </AppHeaderLink>
         <AppHeaderLink to="/tasks">
-          <IconTasks />
+          <i class="pi pi-inbox"></i>
         </AppHeaderLink>
         <AppHeaderLink to="/deals">
-          <IconDeals />
+          <i class="pi pi-image"></i>
         </AppHeaderLink>
       </ul>
     </div>
