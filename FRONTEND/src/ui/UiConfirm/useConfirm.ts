@@ -94,7 +94,7 @@ export function useConfirm() {
                             h('div',
                                 [
                                     h('h3', {
-                                        class: 'text-xl font-medium text-grey-900'
+                                        class: 'text-xl font-medium text-gray-200'
                                     }, this.config.title)
                                 ]
                             ),
@@ -110,13 +110,13 @@ export function useConfirm() {
                             h('div', {class: 'px-6 pb-6 flex gap-12'}, [
 
                                 this.config.showCancel && h('button', {
-                                    class: 'flex-1 py-8 px-8 rounded-[12px] text-grey-7 bg-blue-3 text-white font-medium hover:bg-blue-4 active:bg-grey-1 transition-all duration-200',
+                                    class: 'flex-1 py-8 px-8 rounded-[12px] text-grey-7 bg-blue-300 text-white font-medium hover:bg-blue-4 active:bg-gray-200 transition-all duration-200',
                                     onClick: this.cancel
                                 }, this.config.cancelText),
 
                                 h('button', {
                                     class: [
-                                        'flex-1 py-8 px-8 rounded-[12px] text-grey-7 bg-white shadow-custom font-medium hover:bg-grey-2 active:bg-grey-1 transition-all duration-200',
+                                        'flex-1 py-8 px-8 rounded-[12px] text-grey-7 bg-white shadow-custom font-medium hover:bg-gray-200 active:bg-gray-200 transition-all duration-200',
                                         this.config.type === 'danger' ? 'bg-red-500 hover:bg-red-600 active:bg-red-700' :
                                             this.config.type === 'warning' ? 'bg-amber-500 hover:bg-amber-600 active:bg-amber-700' :
                                                 'bg-blue-500 hover:bg-blue-600 active:bg-blue-700'

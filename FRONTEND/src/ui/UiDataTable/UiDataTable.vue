@@ -134,8 +134,8 @@ const onPageChange = (page: number) => {
 </script>
 
 <template>
-  <div class="overflow-x-auto rounded-lg border border-grey-2">
-    <table class="min-w-full divide-y divide-grey-2">
+  <div class="overflow-x-auto rounded-lg border border-gray-200">
+    <table class="min-w-full divide-y divide-gray-200">
       <!-- Table Header -->
       <thead class="bg-grey-50">
         <tr>
@@ -189,7 +189,7 @@ const onPageChange = (page: number) => {
       </thead>
 
       <!-- Table Body -->
-      <tbody class="bg-white divide-y divide-grey-2">
+      <tbody class="bg-white divide-y divide-gray-200">
         <tr 
           v-for="(item, index) in paginatedData" 
           :key="index"
@@ -215,7 +215,7 @@ const onPageChange = (page: number) => {
     </table>
 
     <!-- Paginator -->
-    <div v-if="paginator" class="flex items-center justify-between border-t border-grey-2 px-4 py-3 bg-white">
+    <div v-if="paginator" class="flex items-center justify-between border-t border-gray-200 px-4 py-3 bg-white">
       <div class="text-sm text-grey-7">
         Showing {{ firstRowIndex + 1 }} to {{ Math.min(firstRowIndex + rows, value.length) }} of {{ value.length }} results
       </div>

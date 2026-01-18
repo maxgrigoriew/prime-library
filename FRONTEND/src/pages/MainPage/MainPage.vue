@@ -34,12 +34,12 @@ onMounted(async () => {
 </script>
 <template>
   <div :class="mobileClass" class="grid-layout h-[calc(100vh-40px)] gap-20 bg-grey-100">
-    <div class="greeting flex flex-col justify-between bg-blue-2 text-white p-[50px] rounded-[12px]">
+    <div class="greeting flex flex-col justify-between bg-blue-200 text-white p-[50px] rounded-[12px]">
       <div class="text-2xl font-bold">Привет, {{ firstName }}</div>
       <div>{{ getToday() }}</div>
     </div>
     <div
-        class="profile bg-blue-3 rounded-[12px] p-[12px] text-4xl flex justify-center items-center text-white font-bold">
+        class="profile bg-blue-300 rounded-[12px] p-[12px] text-4xl flex justify-center items-center text-white font-bold">
       {{ shortName }}
     </div>
     <div class="funnel shadow-custom bg-white rounded-[12px] p-[12px]">

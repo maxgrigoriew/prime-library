@@ -70,7 +70,7 @@ defineExpose({
 
 .infinity-table-wrapper {
 
-  @apply rounded-12 overflow-x-hidden overflow-y-auto border border-grey-2;
+  @apply rounded-12 overflow-x-hidden overflow-y-auto border border-gray-200;
 
   border-bottom-left-radius: 0;
   border-bottom-right-radius: 0;
@@ -88,7 +88,7 @@ defineExpose({
       z-index: 2;
 
       th {
-        @apply bg-grey-2 font-medium p-12 text-left align-top text-grey-4;
+        @apply bg-gray-200 font-medium p-12 text-left align-top text-gray-400;
 
         &:not(:first-child) {
           border-left: 1px solid white;
@@ -102,7 +102,7 @@ defineExpose({
       height: calc(100% - 72px);
 
       & tr {
-        @apply hover:bg-grey-1;
+        @apply hover:bg-gray-100;
         cursor: pointer;
 
         & td {
@@ -127,6 +127,6 @@ defineExpose({
   padding: 12px;
   border-top: none;
 
-  @apply bg-grey-1 font-medium p-12 text-grey-4 text-sm;
+  @apply bg-gray-200 font-medium p-12 text-gray-400 text-sm;
 }
 </style>

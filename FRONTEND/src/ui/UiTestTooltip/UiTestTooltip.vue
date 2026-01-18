@@ -169,6 +169,6 @@ onMounted(() => {
 }
 
 .content {
-  @apply fixed left-0 top-0 bg-grey-1 p-12 rounded-12 w-[300px];
+  @apply fixed left-0 top-0 bg-gray-200 p-12 rounded-12 w-[300px];
 }
 </style>

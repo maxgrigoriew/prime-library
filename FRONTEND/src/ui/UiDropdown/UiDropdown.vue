@@ -62,7 +62,7 @@ onUnmounted(() => {
       ]"
         @click="toggleDropdown"
     >
-      <span :class="{ 'text-grey-4': !selectedOption, 'text-grey-8': selectedOption }">
+      <span :class="{ 'text-gray-400': !selectedOption, 'text-grey-8': selectedOption }">
         {{ selectedOption ? selectedOption.label : (placeholder || 'Select...') }}
       </span>
       <i class="pi pi-chevron-down"></i>
@@ -79,10 +79,10 @@ onUnmounted(() => {
       <div
           v-if="isOpen"
           :class="position"
-          class="content z-10 mt-2 w-full rounded-md bg-white shadow-lg max-h-60 overflow-auto border border-grey-2"
+          class="content z-10 mt-2 w-full rounded-md bg-white shadow-lg max-h-60 overflow-auto border border-gray-200"
       >
         <!-- Filter input -->
-        <div v-if="isFilter" class="p-2 border-b border-grey-2">
+        <div v-if="isFilter" class="p-2 border-b border-gray-200">
           <input
               ref="filterInputRef"
               v-model="filterValue"
@@ -96,9 +96,9 @@ onUnmounted(() => {
           <li
               v-for="option in filteredOptions"
               :key="option.value"
-              class="px-4 py-2 cursor-pointer hover:bg-grey-1"
+              class="px-4 py-2 cursor-pointer hover:bg-gray-100"
               :class="[
-              { 'text-grey-4': option.disabled, 'bg-grey-2': option.value === selectedValue && !option.disabled }
+              { 'text-gray-400': option.disabled, 'bg-gray-200': option.value === selectedValue && !option.disabled }
             ]"
               @click="selectOption(option)"
           >

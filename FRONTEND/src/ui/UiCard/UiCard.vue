@@ -50,7 +50,7 @@ const sizeClasses = computed(() => {
         <h3 v-if="title" class="text-lg font-semibold text-grey-5">
           {{ title }}
         </h3>
-        <p v-if="subtitle" class="text-sm text-grey-4 mt-1">
+        <p v-if="subtitle" class="text-sm text-gray-400 mt-1">
           {{ subtitle }}
         </p>
       </slot>
