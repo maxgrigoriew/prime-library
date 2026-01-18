@@ -23,7 +23,7 @@ export const createNewRouter = () => {
         routes,
     });
 
-    router.beforeEach(async (to, from, next) => {
+    router.beforeEach(async (to, _, next) => {
         await loadSession()
 
         /* если не авторизован и ввожу любой роут кроме login, то меня редиректит на login */
