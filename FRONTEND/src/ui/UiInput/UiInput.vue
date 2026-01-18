@@ -1,45 +1,39 @@
 <script setup lang="ts">
 
-import IconEyeOpened from '@/assets/icons/eye_opened.svg?component'
-import IconEyeClosed from '@/assets/icons/eye_closed.svg?component'
 import {computed, ref} from "vue";
 
 defineOptions({
   name: 'UiInput',
-  components: {
-    IconEyeOpened,
-    IconEyeClosed
-  }
 })
 
 type Props = {
   title?: string
   placeholder?: string
-  visible?: boolean
+  isPasswordMode?: boolean
 }
 
 const {
   title,
   placeholder,
-  visible = true,
+  isPasswordMode = true,
 } = defineProps<Props>()
 
 const emit = defineEmits<{
   'toggle': [boolean]
 }>()
 
-const isVisible = ref(visible)
+const isVisibleIcon = ref(isPasswordMode)
 
 const modelValue = defineModel<string>()
-const type = computed(() => isVisible.value ? 'text' : 'password')
-const inputClasses = computed(() => !visible ? 'pr-32' : '')
+const type = computed(() => isVisibleIcon.value ? 'text' : 'password')
+const inputClasses = computed(() => !isPasswordMode ? 'pr-32' : '')
 
-const currentIcon = computed(() => isVisible.value ? 'IconEyeOpened' : 'IconEyeClosed')
+const currentIcon = computed(() => isVisibleIcon.value ? 'pi pi-eye' : 'pi pi-eye-slash')
 
 const togglePasswordVisible = () => {
-  isVisible.value = !isVisible.value
+  isVisibleIcon.value = !isVisibleIcon.value
 
-  emit('toggle', isVisible.value)
+  emit('toggle', isVisibleIcon.value)
 }
 </script>
 
@@ -54,10 +48,12 @@ const togglePasswordVisible = () => {
           :placeholder="placeholder"
           class="w-100% rounded-[4px] px-8 py-4 border border-gray-3"
       >
-      <div v-if="!visible" class="absolute absolut right-8 top-1/2 -translate-y-1/2 cursor-pointer bg-gray-1"
+      <div v-if="!isPasswordMode" class="absolute right-8 top-1/2 -translate-y-1/2 cursor-pointer "
         @click="togglePasswordVisible"
       >
-        <component :is="currentIcon" />
+        <slot name="icon">
+          <i :class="currentIcon"></i>
+        </slot>
       </div>
     </div>
   </div>
