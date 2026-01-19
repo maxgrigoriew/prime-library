@@ -22,9 +22,9 @@ const {userLogin, userPassword ,loadMyProfile} = authFt()
       Продолжить вход с данными этой учетной записи
     </UiAlert>
     {{userLogin}}
-    <UiInput title="Логин" v-model="userLogin" />
+    <UiInput title="Логин" v-model="userLogin" @keydown.enter="loadMyProfile" />
 
-    <UiInput title="Пароль" :is-password-mode ="false" v-model="userPassword" />
+    <UiInput title="Пароль" :is-password-mode ="false" v-model="userPassword" @keydown.enter="loadMyProfile" />
     <UiButton type="primary" class="ml-auto w-100%" @click="loadMyProfile">Войти</UiButton>
   </div>
   <div class="h-1 bg-gray-200 mt-auto"></div>
