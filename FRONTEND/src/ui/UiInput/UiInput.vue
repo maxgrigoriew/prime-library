@@ -10,51 +10,32 @@ type Props = {
   title?: string
   placeholder?: string
   isPasswordMode?: boolean
+  type: string
+  inputClasses: string
 }
 
 const {
   title,
   placeholder,
-  isPasswordMode = true,
+  type = 'text',
+  inputClasses = ''
 } = defineProps<Props>()
 
-const emit = defineEmits<{
-  'toggle': [boolean]
-}>()
-
-const isVisibleIcon = ref(isPasswordMode)
-
 const modelValue = defineModel<string>()
-const type = computed(() => isVisibleIcon.value ? 'text' : 'password')
-const inputClasses = computed(() => !isPasswordMode ? 'pr-32' : '')
 
-const currentIcon = computed(() => isVisibleIcon.value ? 'pi pi-eye' : 'pi pi-eye-slash')
-
-const togglePasswordVisible = () => {
-  isVisibleIcon.value = !isVisibleIcon.value
-
-  emit('toggle', isVisibleIcon.value)
-}
 </script>
 
 <template>
   <div class="flex flex-col gap-4 rounded-[8px]">
-    <span class="text-xs">{{title}}</span>
-    <div class="relative">
+    <span class="text-xs">{{ title }}</span>
+    <div>
       <input
           :type="type"
           v-model="modelValue"
           :class="inputClasses"
           :placeholder="placeholder"
-          class="w-100% rounded-[4px] px-8 py-4 border border-gray-300"
+          class="w-100% rounded-[4px] px-8 py-4 border border-gray-200 shadow-custom text-zinc-600 font-medium"
       >
-      <div v-if="!isPasswordMode" class="absolute right-8 top-1/2 -translate-y-1/2 cursor-pointer "
-        @click="togglePasswordVisible"
-      >
-        <slot name="icon">
-          <i :class="currentIcon"></i>
-        </slot>
-      </div>
     </div>
   </div>
 </template>

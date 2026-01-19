@@ -4,6 +4,7 @@ import UiAlert from "@/ui/UiAlert/UiAlert.vue";
 import UiInput from "@/ui/UiInput/UiInput.vue";
 import UiButton from "@/ui/UiButton/UiButton.vue";
 import {authFt} from "@/entities/auth/features/authFf.ts";
+import AuthPassword from "@/entities/auth/ui/AuthPassword.vue";
 
 defineOptions({
   name: 'LoginPage'
@@ -23,8 +24,8 @@ const {userLogin, userPassword, loadMyProfile} = authFt()
     {{ userLogin }}
     <UiInput title="Логин" v-model="userLogin" @keydown.enter="loadMyProfile"/>
 
-    <UiInput title="Пароль" :is-password-mode="false" v-model="userPassword" @keydown.enter="loadMyProfile"/>
-    <UiButton type="primary" class="ml-auto w-100%" @click="loadMyProfile">Войти</UiButton>
+    <AuthPassword title="Пароль" :is-password-mode="false" v-model="userPassword" @keydown.enter="loadMyProfile"/>
+    <UiButton type="primary" class="w-100%" @click="loadMyProfile">Войти</UiButton>
   </div>
   <div class="h-1 bg-gray-200 mt-auto"></div>
 </template>

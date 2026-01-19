@@ -26,9 +26,9 @@ const props = withDefaults(defineProps<Props>(), {
 
 const buttonClass = computed(() =>
     cn(
-        'text-black text-base bg-gray-200 hover:bg-gray-300',
+        'text-black text-base bg-gray-200 hover:bg-gray-300 text-zinc-600 font-medium',
         BUTTON_CLASSES_BY_TYPE[props.size],
-        props.disabled && 'bg-gray-100 cursor-default opacity-50',
+        props.disabled && 'bg-gray-200 cursor-default opacity-50 hover:bg-gray-200',
         props.class
     )
 )
