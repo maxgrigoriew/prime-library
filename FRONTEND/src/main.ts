@@ -4,6 +4,7 @@ import ElementPlus from 'element-plus'
 import 'element-plus/dist/index.css'
 import 'primeicons/primeicons.css'
 import './style.css'
+import './assets/globals.css'
 import App from './App.vue'
 import {createNewRouter} from './router'
 const app = createApp(App)
