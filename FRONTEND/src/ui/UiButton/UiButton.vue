@@ -1,31 +1,45 @@
 <script setup lang="ts">
-
-import type {ButtonType} from "./types.ts";
-import {computed} from "vue";
-import {BUTTON_CLASSES_BY_TYPE} from "./constants.ts";
+import type {HTMLAttributes} from 'vue'
+import type {ButtonType, ButtonSize} from './types.ts'
+import {computed} from 'vue'
+import {cn} from '@/lib/utils'
+import {BUTTON_CLASSES_BY_TYPE} from './constants.ts'
 
 defineOptions({
-  name: 'UiButton'
+  name: 'UiButton',
+  inheritAttrs: false,
 })
 
 type Props = {
   text?: string
   type?: ButtonType
   disabled?: boolean
+  class?: HTMLAttributes['class']
+  size?: ButtonSize
 }
 
-const {
-  type = 'primary',
-  text,
-  disabled = false
-} = defineProps<Props>()
+const props = withDefaults(defineProps<Props>(), {
+  type: 'primary',
+  disabled: false,
+  size: 'md'
+})
 
-const buttonTypeClass = computed(() => BUTTON_CLASSES_BY_TYPE[type])
-const buttonDisabledClass = computed(() => disabled ? 'bg-gray-200 cursor-default' : '')
+const buttonClass = computed(() =>
+    cn(
+        'text-black text-base bg-gray-200 hover:bg-gray-300',
+        BUTTON_CLASSES_BY_TYPE[props.size],
+        props.disabled && 'bg-gray-100 cursor-default opacity-50',
+        props.class
+    )
+)
 </script>
 
 <template>
-  <button :disabled="disabled" :class="[buttonTypeClass, buttonDisabledClass]" class="rounded-[4px] px-12 py-6">
+  <button
+      :disabled="disabled"
+      :class="buttonClass"
+      v-bind="$attrs"
+  >
     <slot>
       {{ text }}
     </slot>
