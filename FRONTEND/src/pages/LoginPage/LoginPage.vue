@@ -4,7 +4,7 @@ import UiAlert from "@/ui/UiAlert/UiAlert.vue";
 import UiInput from "@/ui/UiInput/UiInput.vue";
 import UiButton from "@/ui/UiButton/UiButton.vue";
 import {authFt} from "@/entities/auth/features/authFf.ts";
-import Table from "@/components/Table.vue";
+import Table from "@/components/ui/button/Button.vue";
 
 defineOptions({
   name: 'LoginPage'
