@@ -9,7 +9,7 @@
     "erasableSyntaxOnly": false,
     "baseUrl": ".",
     "paths": {
-      "@/*": ["src/*"]
+      "@/*": ["./*"]
 }
   },
 }
