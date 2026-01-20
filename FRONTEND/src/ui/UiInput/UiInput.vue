@@ -1,7 +1,5 @@
 <script setup lang="ts">
 
-import {computed, ref} from "vue";
-
 defineOptions({
   name: 'UiInput',
 })
@@ -27,7 +25,10 @@ const modelValue = defineModel<string>()
 
 <template>
   <div class="flex flex-col gap-4 rounded-[8px]">
-    <span class="text-xs">{{ title }}</span>
+    <slot>
+
+    <span v-if="title" class="text-xs">{{ title }}</span>
+    </slot>
     <div>
       <input
           :type="type"

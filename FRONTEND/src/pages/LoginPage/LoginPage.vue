@@ -24,7 +24,7 @@ const {userLogin, userPassword, loadMyProfile} = authFt()
     {{ userLogin }}
     <UiInput title="Логин" v-model="userLogin" @keydown.enter="loadMyProfile"/>
 
-    <AuthPassword title="Пароль" :is-password-mode="false" v-model="userPassword" @keydown.enter="loadMyProfile"/>
+    <AuthPassword title="Пароль" v-model="userPassword" @keydown.enter="loadMyProfile"/>
     <UiButton type="primary" class="w-100%" @click="loadMyProfile">Войти</UiButton>
   </div>
   <div class="h-1 bg-gray-200 mt-auto"></div>

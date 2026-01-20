@@ -1,12 +1,13 @@
 <script lang="ts" setup="">
 
-import {ref, computed} from "vue";
-import {UiInput} from "@/ui";
+import {ref, computed, useAttrs} from "vue";
+import UiInput from "@/ui/UiInput/UiInput.vue";
 
 defineOptions({
   name: 'AuthPassword'
 })
 
+const attrs = useAttrs()
 
 const modelValue = defineModel<string>()
 
@@ -25,9 +26,9 @@ const togglePasswordVisible = () => {
 
 <template>
   <div class="relative">
-    <UiInput v-model="modelValue" :type="type" v-bind="$props" ref="inputRef" inputClasses="pr-32" />
+    <UiInput v-model="modelValue" :type="type" title="d" v-bind="attrs" ref="inputRef" inputClasses="pr-32" />
 
-    <div class="absolute right-8 top-1/2 -translate-y-1/2 cursor-pointer "
+    <div class="absolute h-16 w-16 flex justify-center align-middle right-8 cursor-pointer bottom-8"
          @click="togglePasswordVisible"
     >
       <slot name="icon">
