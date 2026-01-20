@@ -8,9 +8,12 @@
     "build": "vue-tsc -b && vite build",
     "preview": "vite preview",
     "storybook": "storybook dev -p 6006",
-    "build-storybook": "storybook build"
+    "build-storybook": "storybook build",
+    "lint:imports": "eslint . --ext .js,.ts,.vue --rule 'import/order: error'",
+    "lint:imports:fix": "eslint . --ext .js,.ts,.vue --rule 'import/order: error' --fix"
   },
   "dependencies": {
+    "@eslint/js": "^9.39.2",
     "@intlify/vue-i18n-loader": "^5.0.1",
     "@tanstack/vue-table": "^8.21.3",
     "@vee-validate/zod": "^4.15.1",
@@ -19,6 +22,7 @@
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
     "element-plus": "^2.13.0",
+    "globals": "^17.0.0",
     "lucide-vue-next": "^0.562.0",
     "luxon": "^3.7.2",
     "pinia": "^3.0.4",
@@ -52,6 +56,8 @@
     "autoprefixer": "^10.4.23",
     "eslint": "^9.39.2",
     "eslint-config-prettier": "^10.1.8",
+    "eslint-import-resolver-alias": "^1.1.2",
+    "eslint-plugin-import": "^2.32.0",
     "eslint-plugin-prettier": "^5.5.4",
     "eslint-plugin-storybook": "^10.1.10",
     "eslint-plugin-vue": "^10.6.2",

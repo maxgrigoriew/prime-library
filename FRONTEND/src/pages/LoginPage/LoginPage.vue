@@ -1,10 +1,9 @@
 <script lang="ts" setup>
-
 import UiAlert from "@/ui/UiAlert/UiAlert.vue";
 import UiInput from "@/ui/UiInput/UiInput.vue";
 import UiButton from "@/ui/UiButton/UiButton.vue";
-import {authFt} from "@/entities/auth/features/authFf.ts";
 import AuthPassword from "@/entities/auth/ui/AuthPassword.vue";
+import {authFt} from "@/entities/auth/features/authFf.ts";
 
 defineOptions({
   name: 'LoginPage'

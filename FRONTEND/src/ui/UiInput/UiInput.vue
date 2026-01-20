@@ -7,9 +7,8 @@ defineOptions({
 type Props = {
   title?: string
   placeholder?: string
-  isPasswordMode?: boolean
   type: string
-  inputClasses: string
+  inputClasses?: string
 }
 
 const {
