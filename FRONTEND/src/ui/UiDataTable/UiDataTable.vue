@@ -1,6 +1,7 @@
 <script setup lang="ts">
-import type { DataTableColumn, SortOrder } from './types'
 import { ref, computed } from 'vue'
+
+import type { DataTableColumn, SortOrder } from './types'
 
 defineOptions({
   name: 'UiDataTable'
