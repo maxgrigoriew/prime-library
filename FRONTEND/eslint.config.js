@@ -7,26 +7,16 @@ import globals from 'globals';
 export default [
     // Базовые правила
     js.configs.recommended,
+    ...vuePlugin.configs['flat/recommended'],
 
-    // Глобальные переменные
     {
+        files: ['**/*.{ts,tsx,vue}'],
         languageOptions: {
+            sourceType: 'module',
             globals: {
                 ...globals.browser,
                 ...globals.node,
             },
-        },
-    },
-
-    // Vue правила
-    // ...vuePlugin.configs['flat/vue3-essential'],
-    ...vuePlugin.configs['flat/recommended'],
-
-    // TypeScript поддержка
-    {
-        files: ['**/*.{ts,tsx,vue}'],
-        languageOptions: {
-            parser: tsParser,
             parserOptions: {
                 ecmaVersion: 'latest',
                 sourceType: 'module',
@@ -38,6 +28,7 @@ export default [
                     // Для JSX/TSX
                     tsx: tsParser,
                 },
+                extraFileExtensions: ['.vue'],
             },
         },
     },
