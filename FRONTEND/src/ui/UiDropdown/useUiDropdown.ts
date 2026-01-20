@@ -1,4 +1,5 @@
-import {computed, type ComputedRef, nextTick, ref, type Ref} from "vue";
+import {computed, nextTick, ref} from "vue";
+import type {ComputedRef, Ref} from "vue";
 import type {DropdownOption, DropdownProps} from "@/ui/UiDropdown/types.ts";
 
 type DropDownReturnShape = {
@@ -11,7 +12,7 @@ type DropDownReturnShape = {
   selectOption: (option: DropdownOption) => void
 }
 
-export const useDropdown = (props: DropdownProps, selectedValue: Ref<string>): DropDownReturnShape => {
+export const useDropdown = (props: DropdownProps, selectedValue: string): DropDownReturnShape => {
 
 
   const isOpen = ref(false)
@@ -51,7 +52,7 @@ export const useDropdown = (props: DropdownProps, selectedValue: Ref<string>): D
       return
     }
 
-    selectedValue.value = option.value
+    selectedValue = option.value
     isOpen.value = false
   }
 

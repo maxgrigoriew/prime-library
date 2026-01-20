@@ -9,6 +9,10 @@
     }
   ],
   "compilerOptions": {
+    "noEmitOnError": false,
+    "strict": false,
+    "skipLibCheck": true,
+    "noImplicitAny": false,
     "allowJs": true,
     "erasableSyntaxOnly": false,
     "baseUrl": ".",

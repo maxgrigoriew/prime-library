@@ -1,32 +1,44 @@
-# Use official Node.js alpine image for the build stage
+# Stage 1: Build
 FROM node:20-alpine AS builder
 
-# Set working directory
+# Увеличиваем память
+ENV NODE_OPTIONS="--max-old-space-size=4096"
+
 WORKDIR /app
 
-# Copy package.json and package-lock.json (if available)
-COPY package*.json ./
+# Копируем package файлы
+COPY package.json package-lock.json* ./
 
-# Install dependencies
-RUN npm ci
+# Устанавливаем зависимости
+RUN npm ci --no-audit
 
-# Copy source files
+# Копируем исходники
 COPY . .
 
-# Build the application
+# Собираем приложение
 RUN npm run build
 
-# Use nginx alpine image for production stage
+# Stage 2: Production
 FROM nginx:alpine AS production
 
-# Copy built assets from builder stage
+# Копируем собранное приложение
 COPY --from=builder /app/dist /usr/share/nginx/html
 
-# Copy nginx configuration
-COPY nginx.conf /etc/nginx/nginx.conf
+# Создаем nginx.conf прямо в контейнере
+RUN echo 'events { worker_connections 1024; }' > /etc/nginx/nginx.conf && \
+    echo 'http {' >> /etc/nginx/nginx.conf && \
+    echo '  include /etc/nginx/mime.types;' >> /etc/nginx/nginx.conf && \
+    echo '  default_type application/octet-stream;' >> /etc/nginx/nginx.conf && \
+    echo '  server {' >> /etc/nginx/nginx.conf && \
+    echo '    listen 80;' >> /etc/nginx/nginx.conf && \
+    echo '    root /usr/share/nginx/html;' >> /etc/nginx/nginx.conf && \
+    echo '    index index.html;' >> /etc/nginx/nginx.conf && \
+    echo '    location / { try_files $uri $uri/ /index.html; }' >> /etc/nginx/nginx.conf && \
+    echo '  }' >> /etc/nginx/nginx.conf && \
+    echo '}' >> /etc/nginx/nginx.conf
 
-# Expose port 80
+# Базовая nginx конфигурация
+#COPY nginx.conf /etc/nginx/nginx.conf
+
 EXPOSE 80
-
-# Start nginx
 CMD ["nginx", "-g", "daemon off;"]

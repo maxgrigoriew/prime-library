@@ -11,14 +11,12 @@ type Props = {
   byClick?: boolean,
   offset?: number
   placement: TooltipSide
-  width: number
 }
 
 const {
   byClick = false,
   offset = 12,
   placement = 'bottom',
-  width = 400
 } = defineProps<Props>()
 
 const isVisible = ref(false)

@@ -127,7 +127,7 @@ onUnmounted(() => {
           <div v-if="showHeader" class="flex items-center justify-between p-6 border-b border-gray-200">
             <div class="font-semibold text-lg text-grey-8">
               <slot name="header">
-                <span>{{ title }}</span>
+<!--                <span>{{ title }}</span>-->
               </slot>
             </div>
             <button 

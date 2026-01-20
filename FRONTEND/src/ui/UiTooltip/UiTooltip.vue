@@ -96,7 +96,7 @@ const hideTooltip = () => {
 // Обработчики для hover на самом тултипе
 const handleTooltipMouseEnter = () => {
   if (!props.openOnClick) {
-    clearTimeout(timeoutId.value)
+    // TODO: исправить clearTimeout(timeoutId.value)
   }
 }
 
